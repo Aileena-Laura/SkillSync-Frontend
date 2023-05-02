@@ -13,7 +13,7 @@ export function initLogin(match) {
 
 async function login() {
   responseStatus.innerText = ""
-  signUpMsg.innerText = ""
+  document.getElementById("signedup-msg").innerText = ""
   const userNameInput = document.getElementById("username")
   const passwordInput = document.getElementById("password")
   const loginRequest = {}
@@ -46,8 +46,10 @@ export function logout() {
 }
 
 export function toggleLoginStatus(loggedIn) {
+  //Hide or show all menu-links depending on login status
   document.getElementById("login-container").style.display = loggedIn ? "none" : "block"
   document.getElementById("logout-container").style.display = loggedIn ? "block" : "none"
+  document.getElementById("signup-container").style.display = loggedIn ? "none" : "block"
   const loggedInUserTxt = loggedIn ? `User: ${localStorage["user"]} (${localStorage["roles"]})` : ""
   document.getElementById("user-details").innerText = loggedInUserTxt
   if(responseStatus){
