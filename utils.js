@@ -1,16 +1,14 @@
-
 /**
  * Appends the provided template to the node with the id contentId
  * @param {*} templ The HTML-Template to render
- * @param {string} contentId 
+ * @param {string} contentId
  */
 export function renderTemplate(templ, contentId) {
-  const clone = templ.content.cloneNode(true)
-  const content = document.getElementById(contentId)
-  content.innerHTML = ""
-  content.appendChild(clone)
+  const clone = templ.content.cloneNode(true);
+  const content = document.getElementById(contentId);
+  content.innerHTML = "";
+  content.appendChild(clone);
 }
-
 
 /**
  * Loads an external file with an html-template, adds it to the body of your page, and returns the template
@@ -20,19 +18,19 @@ export function renderTemplate(templ, contentId) {
  * @return {Promise<*>} On succesfull resolvement, the HtmlTemplate found in the file
  */
 export async function loadTemplate(page) {
-  const resHtml = await fetch(page).then(r => {
+  const resHtml = await fetch(page).then((r) => {
     if (!r.ok) {
-      throw new Error(`Failed to load the page: '${page}' `)
+      throw new Error(`Failed to load the page: '${page}' `);
     }
-    return r.text()
+    return r.text();
   });
   //const body = document.getElementsByTagName("BODY")[0];
   const div = document.createElement("div");
   div.innerHTML = resHtml;
   //body.appendChild(div)
   //return div.querySelector("template")
-  return div.querySelector("template")
-};
+  return div.querySelector("template");
+}
 
 /**
  * Only meant for when Navigo is set to use Hash based routing (Always this semester)
@@ -41,9 +39,10 @@ export async function loadTemplate(page) {
  * Call it before you start using the router (add the specific routes)
  */
 export function adjustForMissingHash() {
-  let path = window.location.hash
-  if (path == "") { //Do this only for hash
-    path = "#/"
+  let path = window.location.hash;
+  if (path == "") {
+    //Do this only for hash
+    path = "#/";
     window.history.pushState({}, path, window.location.href + path);
   }
 }
@@ -56,13 +55,13 @@ export function adjustForMissingHash() {
  */
 export function setActiveLink(topnav, activeUrl) {
   const links = document.getElementById(topnav).querySelectorAll("a");
-  links.forEach(child => {
-    child.classList.remove("active")
+  links.forEach((child) => {
+    child.classList.remove("active");
     //remove leading '/' if any
     if (child.getAttribute("href").replace(/\//, "") === activeUrl) {
-      child.classList.add("active")
+      child.classList.add("active");
     }
-  })
+  });
 }
 
 /**
@@ -73,23 +72,22 @@ export function setActiveLink(topnav, activeUrl) {
 export async function handleHttpErrors(res) {
   if (!res.ok) {
     const errorResponse = await res.json();
-    const error = new Error(errorResponse.message)
+    const error = new Error(errorResponse.message);
     //@ts-ignore
-    error.fullError = errorResponse
-    throw error
+    error.fullError = errorResponse;
+    throw error;
   }
-  return res.json()
+  return res.json();
 }
 
-
 /**
- * Table-rows are required to be inside a table tag, so use this small utility function to santitize a string with TableRows only 
+ * Table-rows are required to be inside a table tag, so use this small utility function to santitize a string with TableRows only
  * (made from data with map)
  * SEE Here for info related to how to use DomPurify and the function below this semester here:
- * https://docs.google.com/document/d/14aC77ITi9sLCMruYUchu4L93dBqKnoja3I7TwR0lXw8/edit#heading=h.jj4ss771miw5 
-*/
+ * https://docs.google.com/document/d/14aC77ITi9sLCMruYUchu4L93dBqKnoja3I7TwR0lXw8/edit#heading=h.jj4ss771miw5
+ */
 export function sanitizeStringWithTableRows(tableRows) {
-  let secureRows = DOMPurify.sanitize("<table>" + tableRows + "</table>")
-  secureRows = secureRows.replace("<table>", "").replace("</table>", "")
-  return secureRows
+  let secureRows = DOMPurify.sanitize("<table>" + tableRows + "</table>");
+  secureRows = secureRows.replace("<table>", "").replace("</table>", "");
+  return secureRows;
 }
