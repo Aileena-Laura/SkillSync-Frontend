@@ -32,7 +32,7 @@ async function login() {
   } catch (err) {
     responseStatus.style.color = "darkred"
     if (err.apiError) {
-      responseStatus.innerText = err.apiError.message
+      responseStatus.innerText = err.apiError.message + " " +loginRequest.username + " " + loginRequest.password = passwordInput.value
     } else {
       responseStatus.innerText = err.message
     }
