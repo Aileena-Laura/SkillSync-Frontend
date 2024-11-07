@@ -7,5 +7,5 @@ if (
 } else {
   //Add URL to your hosted API, once you have it deployed.
   API_URL =
-    "https://skillsync-backend-gtgrd5emg5fagudj.northeurope-01.azurewebsites.net/api";
+    "skillsync-backend-gtgrd5emg5fagudj.northeurope-01.azurewebsites.net/api";
 }
