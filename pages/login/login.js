@@ -33,7 +33,8 @@ async function login() {
   } catch (err) {
     responseStatus.style.color = "darkred";
     if (err.apiError) {
-      responseStatus.innerText = loginRequest;
+      responseStatus.innerText =
+        "Login failed: " + err.apiError.message || "Unknown error";
     } else {
       responseStatus.innerText = err.message;
     }
