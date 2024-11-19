@@ -52,7 +52,7 @@ export function toggleLoginStatus(loggedIn) {
   document.getElementById("login-container").style.display = loggedIn
     ? "none"
     : "block";
-  document.getElementById("logout-container").style.display = loggedIn
+  document.getElementById("profile-container").style.display = loggedIn
     ? "block"
     : "none";
   document.getElementById("signup-container").style.display = loggedIn
@@ -61,7 +61,6 @@ export function toggleLoginStatus(loggedIn) {
   const loggedInUserTxt = loggedIn
     ? `User: ${localStorage["user"]} (${localStorage["roles"]})`
     : "";
-  document.getElementById("user-details").innerText = loggedInUserTxt;
   if (responseStatus) {
     responseStatus.innerText = "";
   }
