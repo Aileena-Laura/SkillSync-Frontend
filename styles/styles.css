@@ -1,9 +1,20 @@
-
 /*
 
 Styles used for labels and input fields in boot strap columns
 
 */
+
+/* LogoSS(1) */
+#logo-1 {
+  width: 72px;
+  height: 67px;
+  left: 25px;
+  top: 19px;
+}
+
+#logo-2 {
+  width: 72px;
+}
 
 .row label {
   margin-top: 1.5em;
@@ -15,7 +26,6 @@ Styles used for labels and input fields in boot strap columns
   margin-top: 1em;
   padding: 0.35em;
   border-radius: 4px;
-  width:100%;
+  width: 100%;
   border: 1px solid lightgray;
 }
-
