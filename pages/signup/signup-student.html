@@ -1,5 +1,5 @@
 <template>
-  <h3 style="margin-top: 0.5em; min-height: 1em">Sign up</h3>
+  <h3 style="margin-top: 0.5em; min-height: 1em">Sign up as a student</h3>
   <hr />
   <div>
     <form id="form" style="max-width: 900px">
@@ -12,23 +12,15 @@
           placeholder="password"
           required
         />
-        <div style="display: flex; align-items: center; gap: 10px">
-          <label for="checkbox-student">Student</label>
-          <input
-            type="checkbox"
-            id="checkbox-student"
-            name="role"
-            value="student"
-          />
-
-          <label for="checkbox-company">Company</label>
-          <input
-            type="checkbox"
-            id="checkbox-company"
-            name="role"
-            value="company"
-          />
-        </div>
+        <input
+          type="password"
+          id="input-password-confirm"
+          class="form-control"
+          placeholder="Confirm password"
+          required
+        />
+        <input id="input-firstName" placeholder="Firstname" required />
+        <input id="input-lastName" placeholder="Lastname" required />
       </div>
 
       <div class="row">
