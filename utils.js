@@ -74,7 +74,7 @@ export async function handleHttpErrors(res) {
     const errorResponse = await res.json();
     const error = new Error(errorResponse.message);
     //@ts-ignore
-    error.fullError = errorResponse;
+    error.apiError = errorResponse;
     throw error;
   }
   return res.json();
