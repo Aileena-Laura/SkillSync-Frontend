@@ -1,0 +1,98 @@
+<template>
+  <section style="background-color: #eee">
+    <div class="container-fluid py-5">
+      <div class="row">
+        <!-- Profile Section -->
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center position-relative">
+              <!-- Profile Picture with Hover Effect and Edit Icon -->
+              <div class="profile-image-container">
+                <img
+                  id="profile-picture"
+                  src="/images/user.png"
+                  alt="avatar"
+                  class="rounded-circle img-fluid profile-image"
+                />
+                <button class="edit-icon">
+                  <i class="fas fa-pen"></i>
+                </button>
+              </div>
+              <h5 id="user-name" class="my-3">Your Name</h5>
+            </div>
+          </div>
+
+          <!-- Profile Info Section -->
+          <div class="card mb-4">
+            <div class="card-header">Basic Info</div>
+            <div id="basic-info" class="card-body">
+              <!-- Content dynamically inserted -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Second Column (Description, Skills, etc.) -->
+        <div class="col-lg-8">
+          <!-- Description -->
+          <div class="card mb-4">
+            <h5 class="card-header">Description</h5>
+            <div class="card-body">
+              <textarea
+                id="user-description"
+                class="form-control mb-3"
+                rows="4"
+              >
+Write your description here...
+              </textarea>
+              <button
+                id="save-description"
+                class="btn btn-outline-primary mb-3"
+              >
+                Save
+              </button>
+            </div>
+          </div>
+
+          <!-- Skills -->
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title">Skills</h5>
+              <div id="skills-container" class="d-flex flex-wrap gap-2">
+                <!-- Skills dynamically inserted -->
+              </div>
+              <div class="input-group mt-3">
+                <input
+                  type="text"
+                  id="new-skill"
+                  class="form-control"
+                  placeholder="Add a skill"
+                />
+                <button id="add-skill" class="btn btn-primary">Add</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Liked Posts and My Projects -->
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card mb-4">
+                <div class="card-header">Liked Posts</div>
+                <div id="liked-posts" class="card-body">
+                  <!-- Liked posts dynamically inserted -->
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card mb-4">
+                <div class="card-header">My Projects</div>
+                <div id="my-projects" class="card-body">
+                  <!-- Projects dynamically inserted -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</template>
