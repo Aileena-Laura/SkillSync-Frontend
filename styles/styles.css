@@ -30,6 +30,53 @@ Styles used for labels and input fields in boot strap columns
   border: 1px solid lightgray;
 }
 
+/* Profile pen edit style */
+.profile-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.profile-image {
+  transition: filter 0.3s ease;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.profile-image-container:hover .profile-image {
+  filter: grayscale(100%);
+}
+
+.edit-icon {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  transform: translate(50%, 50%);
+  width: 40px; /* Consistent width for the circle */
+  height: 40px; /* Consistent height for the circle */
+  font-size: 1.5rem; /* Slightly adjusted font size */
+  background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+  color: white;
+  border: 2px solid white;
+  border-radius: 50%; /* Makes the button round */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.profile-image-container:hover .edit-icon {
+  opacity: 1; /* Show icon when hovering */
+}
+
+.edit-icon:hover {
+  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
+  transform: translate(50%, 50%) scale(1.1); /* Slightly enlarge the button */
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;

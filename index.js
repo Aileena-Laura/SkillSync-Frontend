@@ -10,6 +10,7 @@ import {
 import { initLogin, toggleLoginStatus, logout } from "./pages/login/login.js";
 import { initSignupStudent } from "./pages/signup/signup-student.js";
 import { initSignupCompany } from "./pages/signup/signup-company.js";
+import { initProfile } from "./pages/profile/profile.js";
 
 //If token existed, for example after a refresh, set UI accordingly
 const token = localStorage.getItem("token");
@@ -19,6 +20,7 @@ window.addEventListener("load", async () => {
   const templateSignupStudent = await loadTemplate(
     "./pages/signup/signup-student.html"
   );
+  const templateProfile = await loadTemplate("./pages/profile/profile.html");
   const templateSignupCompany = await loadTemplate(
     "./pages/signup/signup-company.html"
   );
@@ -66,6 +68,10 @@ window.addEventListener("load", async () => {
       "/login": (match) => {
         renderTemplate(templateLogin, "content");
         initLogin(match);
+      },
+      "/profile": () => {
+        renderTemplate(templateProfile, "content");
+        initProfile();
       },
       "/logout": () => {
         () => router.navigate("/");
