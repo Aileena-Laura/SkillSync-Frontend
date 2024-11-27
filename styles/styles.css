@@ -4,10 +4,14 @@ Styles used for labels and input fields in boot strap columns
 
 */
 
+#content {
+  padding-top: 11rem;
+}
+
 /* LogoSS(1) */
 #logo-1 {
-  width: 72px;
-  height: 67px;
+  width: 43px;
+  height: 40px;
   left: 25px;
   top: 19px;
 }
@@ -30,7 +34,13 @@ Styles used for labels and input fields in boot strap columns
   border: 1px solid lightgray;
 }
 
-/* Profile pen edit style */
+/* ################################### navbar ################################# */
+nav {
+  height: 50px;
+}
+/* ############################################################################ */
+
+/* ########################## Profile pen edit style ##########################*/
 .profile-image-container {
   position: relative;
   display: inline-block;
@@ -77,6 +87,8 @@ Styles used for labels and input fields in boot strap columns
   transform: translate(50%, 50%) scale(1.1); /* Slightly enlarge the button */
 }
 
+/* ############################################################################ */
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
@@ -100,7 +112,6 @@ body {
     background-position: 0% 50%;
   }
 }
-
 
 .container {
   text-align: center;
@@ -153,16 +164,16 @@ button:hover {
   background-color: #555;
 }*/
 
-
 /* CSS */
 button {
   background: linear-gradient(to bottom right, #6c21dc, #80b4f6);
   border: 0;
   border-radius: 12px;
-  color: #FFFFFF;
+  color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 2.5;
@@ -170,7 +181,7 @@ button {
   padding: 0 1rem;
   text-align: center;
   text-decoration: none;
-  transition: box-shadow .2s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
@@ -178,9 +189,13 @@ button {
 }
 
 button:not([disabled]):focus {
-  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(211, 167, 252, 0.5), .125rem .125rem 1rem rgba(127, 68, 254, 0.963);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
+    0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
 }
 
 button:not([disabled]):hover {
-  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(211, 167, 252, 0.5), .125rem .125rem 1rem rgba(127, 68, 254, 0.963);
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+    -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
+    0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
 }

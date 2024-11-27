@@ -114,3 +114,6 @@ export function sanitizeStringWithTableRows(tableRows) {
   secureRows = secureRows.replace("<table>", "").replace("</table>", "");
   return secureRows;
 }
+export function sanitizeString(input) {
+  return DOMPurify.sanitize(input);
+}
