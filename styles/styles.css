@@ -1,10 +1,57 @@
-/*
+/* Variables for colors and fonts */
+:root {
+  --primary-bg-color: #231f33;
+  --secondary-bg-color: #6c21dc;
+  --light-bg-color: #f6f6f6;
+  --gradient-start: #231f33;
+  --gradient-end: #6c21dc;
+  --button-gradient-start: #6c21dc;
+  --button-gradient-end: #80b4f6;
+  --button-text-color: #ffffff;
+  --input-border-color: lightgray;
+  --hover-bg-color: rgba(0, 0, 0, 0.7);
+  --edit-icon-bg: rgba(0, 0, 0, 0.5);
+  --shadow-color: rgba(0, 0, 0, 0.3);
+  --font-primary: Arial, sans-serif;
+  --font-secondary: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
 
-Styles used for labels and input fields in boot strap columns
+/* General styles */
+body {
+  font-family: var(--font-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(120deg, var(--gradient-start), var(--gradient-end));
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s ease infinite;
+}
 
-*/
+.container {
+  text-align: center;
+}
 
-/* LogoSS(1) */
+h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+/* Gradient animation */
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Logo styles */
 #logo-1 {
   width: 72px;
   height: 67px;
@@ -14,6 +61,27 @@ Styles used for labels and input fields in boot strap columns
 
 #logo-2 {
   width: 72px;
+}
+
+/* Form and input styles */
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  text-align: left;
+  font-weight: bold;
+  margin: 10px 0 5px;
+}
+
+input[type="text"],
+input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid var(--light-bg-color);
+  border-radius: 5px;
 }
 
 .row label {
@@ -27,10 +95,10 @@ Styles used for labels and input fields in boot strap columns
   padding: 0.35em;
   border-radius: 4px;
   width: 100%;
-  border: 1px solid lightgray;
+  border: 1px solid var(--input-border-color);
 }
 
-/* Profile pen edit style */
+/* Profile image styles */
 .profile-image-container {
   position: relative;
   display: inline-block;
@@ -54,115 +122,47 @@ Styles used for labels and input fields in boot strap columns
   bottom: 5px;
   right: 5px;
   transform: translate(50%, 50%);
-  width: 40px; /* Consistent width for the circle */
-  height: 40px; /* Consistent height for the circle */
-  font-size: 1.5rem; /* Slightly adjusted font size */
-  background-color: rgba(0, 0, 0, 0.5); /* Dark background */
-  color: white;
-  border: 2px solid white;
-  border-radius: 50%; /* Makes the button round */
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  background-color: var(--edit-icon-bg);
+  color: var(--button-text-color);
+  border: 2px solid var(--button-text-color);
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 8px var(--shadow-color);
 }
 
 .profile-image-container:hover .edit-icon {
-  opacity: 1; /* Show icon when hovering */
+  opacity: 1;
 }
 
 .edit-icon:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
-  transform: translate(50%, 50%) scale(1.1); /* Slightly enlarge the button */
+  background-color: var(--hover-bg-color);
+  transform: translate(50%, 50%) scale(1.1);
 }
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background: linear-gradient(120deg, #231f33, #6c21dc);
-  background-size: 200% 200%;
-  animation: gradientAnimation 10s ease infinite;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-
-.container {
-  text-align: center;
-}
-
+/* Login box styles */
 .login-box {
-  background-color: #f6f6f6;
+  background-color: var(--light-bg-color);
   padding: 20px;
   border-radius: 10px;
   width: 350px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  text-align: left;
-  font-weight: bold;
-  margin: 10px 0 5px;
-}
-
-input[type="text"],
-input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #f6f6f6;
-  border-radius: 5px;
-}
-/*
+/* Button styles */
 button {
-  padding: 10px;
-  background-color: #231f33;
-  color: #f6f6f6;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-}
-
-button:hover {
-  background-color: #555;
-}*/
-
-
-/* CSS */
-button {
-  background: linear-gradient(to bottom right, #6c21dc, #80b4f6);
+  background: linear-gradient(to bottom right, var(--button-gradient-start), var(--button-gradient-end));
   border: 0;
   border-radius: 12px;
-  color: #FFFFFF;
+  color: var(--button-text-color);
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-family: var(--font-secondary);
   font-size: 16px;
   font-weight: 500;
   line-height: 2.5;
@@ -170,17 +170,71 @@ button {
   padding: 0 1rem;
   text-align: center;
   text-decoration: none;
-  transition: box-shadow .2s ease-in-out;
+  transition: box-shadow 0.2s ease-in-out;
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
   white-space: nowrap;
 }
 
-button:not([disabled]):focus {
-  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(211, 167, 252, 0.5), .125rem .125rem 1rem rgba(127, 68, 254, 0.963);
+button:not([disabled]):focus,
+button:not([disabled]):hover {
+  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
+              -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
+              0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
 }
 
-button:not([disabled]):hover {
-  box-shadow: 0 0 .25rem rgba(0, 0, 0, 0.5), -.125rem -.125rem 1rem rgba(211, 167, 252, 0.5), .125rem .125rem 1rem rgba(127, 68, 254, 0.963);
+.carousel-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.carousel-container {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+}
+
+.carousel-slide {
+  width: 100%;
+  height: 100vh;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.carousel-slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Image fills the screen without distortion */
+}
+
+.link-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 2x2 grid */
+  grid-template-rows: repeat(2, 1fr);
+  gap: 20px;
+  position: absolute;
+  bottom: 50px; /* Position below the image */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%; /* Adjust the width as needed */
+  max-width: 400px; /* Prevents it from getting too wide */
+}
+
+.link-box {
+  background-color: #8a2be2; /* Purple */
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1 / 1; /* Ensures squares */
+  font-size: 24px;
+  border-radius: 10px;
 }

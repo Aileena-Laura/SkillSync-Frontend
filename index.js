@@ -1,4 +1,4 @@
-import "./navigo_EditedByLars.js"; //Will create the global Navigo, with a few changes, object used below
+import "./navigo_EditedByLars.js"; // Will create the global Navigo object with a few changes
 
 import {
   setActiveLink,
@@ -11,8 +11,9 @@ import { initLogin, toggleLoginStatus, logout } from "./pages/login/login.js";
 import { initSignupStudent } from "./pages/signup/signup-student.js";
 import { initSignupCompany } from "./pages/signup/signup-company.js";
 import { initProfile } from "./pages/profile/profile.js";
+import { initHome } from "./pages/home/home.js";
 
-//If token existed, for example after a refresh, set UI accordingly
+// If token exists, for example after a refresh, set UI accordingly
 const token = localStorage.getItem("token");
 toggleLoginStatus(token);
 
@@ -26,12 +27,17 @@ window.addEventListener("load", async () => {
   );
   const templateLogin = await loadTemplate("./pages/login/login.html");
   const templateNotFound = await loadTemplate("./pages/notFound/notFound.html");
+  const templateHome = await loadTemplate("./pages/home/home.html");
 
   adjustForMissingHash();
 
   const router = new Navigo("/", { hash: true });
-  //Not especially nice, BUT MEANT to simplify things. Make the router global so it can be accessed from all js-files
-  window.router = router;
+  window.router = router; // Make the router global so it can be accessed from all js-files
+
+  // Redirect to '/home' if root URL is accessed
+  if (window.location.hash === "" || window.location.hash === "#/") {
+    router.navigate("/home");
+  }
 
   router
     .hooks({
@@ -41,22 +47,16 @@ window.addEventListener("load", async () => {
       },
     })
     .on({
-      //For very simple "templates", you can just insert your HTML directly like below
-      "/": () =>
-        (document.getElementById("content").innerHTML = `
-        <h2>Home</h2>
-        <h5 style="color:darkorange">Make sure to change, colors and layout if you use this for your own projects</h5>
-     `),
-      "/dropdown-0": () => {
-        alert(0);
+      "/": () => {
+        router.navigate("/home"); // Fallback redirection to 'home'
       },
-      "/dropdown-1": () => {
-        alert(1);
+      "/home": () => {
+        renderTemplate(templateHome, "content"); // Ensure 'content' is the correct container ID
+        initHome();
       },
-      "/dropdown-2": () => {
-        alert(2);
-      },
-
+      "/dropdown-0": () => alert(0),
+      "/dropdown-1": () => alert(1),
+      "/dropdown-2": () => alert(2),
       "/signup/student": () => {
         renderTemplate(templateSignupStudent, "content");
         initSignupStudent();
@@ -74,8 +74,8 @@ window.addEventListener("load", async () => {
         initProfile();
       },
       "/logout": () => {
-        () => router.navigate("/");
         logout();
+        router.navigate("/home");
       },
     })
     .notFound(() => {
@@ -84,6 +84,7 @@ window.addEventListener("load", async () => {
     .resolve();
 });
 
+// Error handling
 window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
   alert(
     "Error: " +
@@ -98,3 +99,20 @@ window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
       errorObj
   );
 };
+
+// Carousel functionality
+let currentSlide = 0;
+const slides = document.querySelectorAll(".carousel-slide");
+const totalSlides = slides.length;
+
+function showSlides() {
+  slides.forEach((slide, index) => {
+    slide.style.opacity = index === currentSlide ? 1 : 0;
+  });
+
+  currentSlide = (currentSlide + 1) % totalSlides; // Loop through slides
+  setTimeout(showSlides, 5000); // Change slide every 5 seconds
+}
+
+// Initialize carousel
+showSlides();
