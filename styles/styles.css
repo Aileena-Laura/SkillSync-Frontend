@@ -89,6 +89,32 @@ nav {
 
 /* ############################################################################ */
 
+.hidden {
+  display: none;
+}
+
+#location-suggestions {
+  display: block; /* Ensure the list is displayed */
+  position: absolute; /* Position it relative to the input field */
+  z-index: 1055; /* Ensure it appears above the modal */
+  max-height: 200px; /* Optional: Limit the height for scrolling */
+  overflow-y: auto; /* Enable scroll for long lists */
+  list-style: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  background-color: #fff; /* Ensure a white background */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Round the corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+}
+#location-suggestions li {
+  padding: 8px 12px; /* Add padding for items */
+  cursor: pointer; /* Add a pointer cursor */
+}
+#location-suggestions li:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}
+
 body {
   font-family: Arial, sans-serif;
   margin: 0;
