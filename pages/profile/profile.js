@@ -247,6 +247,7 @@ async function saveChangesToBasicInfo(user, URL) {
 
       // Update the profile UI
       renderBasicInfo(user);
+      renderProfilePictureAndName(user);
     }
   } catch (error) {
     console.error("Error saving changes:", error);
