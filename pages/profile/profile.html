@@ -29,7 +29,12 @@
               <!-- Content dynamically inserted -->
             </div>
             <div class="card-footer">
-              <button id="edit-info-btn" class="btn btn-outline-primary">
+              <button
+                id="edit-basic-info-btn"
+                class="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#edit-basic-info-modal"
+              >
                 Edit
               </button>
             </div>
@@ -47,15 +52,14 @@
                 class="form-control mb-3"
                 rows="4"
               >
-  Write your description here...
-                </textarea
-              >
+              </textarea>
               <button
                 id="save-description"
                 class="btn btn-outline-primary mb-3"
               >
                 Save
               </button>
+              <p id="description-message" style="color: green"></p>
             </div>
           </div>
 
@@ -76,4 +80,132 @@
       </div>
     </div>
   </section>
+  <div
+    class="modal fade"
+    id="add-skill-modal"
+    tabindex="-1"
+    aria-labelledby="modal-title"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Add Skill:</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="form-group">
+              <label for="input-skill-name" class="me-2">Skill:</label>
+              <input
+                id="input-skill-name"
+                type="text"
+                placeholder="Skill name"
+                class="form-control"
+              />
+            </div>
+            <div class="form-group">
+              <label for="skill-experience" class="me-2">Experience:</label>
+              <select
+                id="skill-experience"
+                name="experience"
+                class="form-select"
+                required
+              >
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            id="save-skill-btn"
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="edit-basic-info-modal"
+    tabindex="-1"
+    aria-labelledby="modal-title"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editBasicInfoModalLabel">Edit Info</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div id="edit-basic-info">
+            <div class="mb-3">
+              <label for="edit-first-name" class="form-label">First Name</label>
+              <input type="text" id="edit-first-name" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-company-name" class="form-label"
+                >Company Name</label
+              >
+              <input type="text" id="edit-company-name" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-last-name" class="form-label">Last Name</label>
+              <input type="text" id="edit-last-name" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-email" class="form-label">Email</label>
+              <input type="text" id="edit-email" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-location" class="form-label">Location</label>
+              <input type="text" id="edit-location" required />
+              <ul id="location-suggestions" class="dropdown-menu"></ul>
+            </div>
+            <div class="mb-3">
+              <label for="edit-education" class="form-label">Education</label>
+              <input type="text" class="form-control" id="edit-education" />
+            </div>
+            <div class="mb-3">
+              <label for="edit-website" class="form-label">Website</label>
+              <input type="text" class="form-control" id="edit-website" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="save-basic-info-btn"
+            data-bs-dismiss="modal"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>

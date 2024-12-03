@@ -1,3 +1,55 @@
+const API_KEY = "98a4991d3d1d4c39809827c7c0e15766"; // Your Geoapify API key
+
+/**
+ * Fetches geolocation suggestions from Geoapify and updates the suggestions list.
+ * @param {string} query - The input text to search for.
+ * @param {HTMLElement} locationInput - The input element where the query is entered.
+ * @param {HTMLElement} suggestionsList - The element to display the suggestions.
+ */
+export async function fetchGeoapifyAutocomplete(
+  query,
+  locationInput,
+  suggestionsList
+) {
+  const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(
+    query
+  )}&apiKey=${API_KEY}`;
+
+  try {
+    const response = await fetch(url);
+    const result = await response.json();
+
+    // Clear the previous suggestions
+    suggestionsList.innerHTML = "";
+
+    // Check if there are any features (suggestions)
+    if (result.features && result.features.length > 0) {
+      result.features.forEach((feature) => {
+        const suggestionItem = document.createElement("li");
+        suggestionItem.classList.add(
+          "list-group-item",
+          "list-group-item-action"
+        ); // Bootstrap styles for clickable items
+        suggestionItem.textContent = feature.properties.formatted; // Display the location
+        suggestionItem.style.cursor = "pointer"; // Makes it clear that it's clickable
+
+        suggestionItem.addEventListener("click", () => {
+          locationInput.value = feature.properties.formatted; // Set input to selected location
+          suggestionsList.innerHTML = ""; // Clear suggestions
+        });
+        suggestionsList.appendChild(suggestionItem);
+      });
+    } else {
+      const noResultsItem = document.createElement("li");
+      noResultsItem.classList.add("list-group-item", "text-muted"); // Add a muted style for "No Results"
+      noResultsItem.textContent = "No suggestions found";
+      suggestionsList.appendChild(noResultsItem);
+    }
+  } catch (error) {
+    console.error("Error fetching data from Geoapify:", error);
+  }
+}
+
 /**
  * Appends the provided template to the node with the id contentId
  * @param {*} templ The HTML-Template to render
