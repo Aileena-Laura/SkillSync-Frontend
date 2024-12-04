@@ -36,7 +36,7 @@ async function fetchUser() {
   try {
     const username = localStorage.getItem("user");
     let URL =
-      localStorage.getItem("roles") == "STUDENT" ? URLStudent : URLCompany;
+      localStorage.getItem("role") == "STUDENT" ? URLStudent : URLCompany;
 
     const user = await fetch(
       `${URL}/${username}`,
