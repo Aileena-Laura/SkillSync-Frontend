@@ -43,7 +43,7 @@ async function login() {
 export function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  localStorage.removeItem("roles");
+  localStorage.removeItem("role");
   toggleLoginStatus(false);
 }
 
@@ -59,7 +59,7 @@ export function toggleLoginStatus(loggedIn) {
     ? "none"
     : "block";
   const loggedInUserTxt = loggedIn
-    ? `User: ${localStorage["user"]} (${localStorage["roles"]})`
+    ? `User: ${localStorage["user"]} (${localStorage["role"]})`
     : "";
   if (responseStatus) {
     responseStatus.innerText = "";
@@ -73,7 +73,7 @@ export function toggleLoginStatus(loggedIn) {
 function storeLoginDetails(res) {
   localStorage.setItem("token", res.token);
   localStorage.setItem("user", res.username);
-  localStorage.setItem("roles", res.roles);
+  localStorage.setItem("role", res.role);
   //Update UI
   toggleLoginStatus(true);
 }
