@@ -74,7 +74,7 @@ window.addEventListener("load", async () => {
         initProfile();
       },
       "/logout": () => {
-        () => router.navigate("/");
+        window.router.navigate("/");
         logout();
       },
     })
