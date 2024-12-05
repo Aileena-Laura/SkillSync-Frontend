@@ -1,8 +1,6 @@
-/*
-
-Styles used for labels and input fields in boot strap columns
-
-*/
+html {
+  scroll-behavior: smooth;
+}
 
 #content {
   padding-top: 11rem;
@@ -224,4 +222,50 @@ button:not([disabled]):hover {
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
     -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
     0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  padding: 10px 0;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+section {
+  padding: 100px 20px;
+  min-height: 100vh;  /* Each section takes at least the full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+section:nth-child(even) {
+  background-color: #e0e0e0;
 }
