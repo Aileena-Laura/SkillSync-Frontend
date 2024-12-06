@@ -37,6 +37,14 @@
               >
                 Edit
               </button>
+              <button
+                id="delete-account-btn"
+                class="btn btn-outline-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#delete-account-modal"
+              >
+                Delete
+              </button>
             </div>
           </div>
         </div>
@@ -203,6 +211,44 @@
             data-bs-dismiss="modal"
           >
             Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="delete-account-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Are You sure you want to delete your account?
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <p>This action is perminant and cannot be reversed.</p>
+          <p id="successful-delete-message"></p>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button
+            id="delete-account-final-btn"
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            Delete
           </button>
         </div>
       </div>

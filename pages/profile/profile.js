@@ -209,10 +209,32 @@ async function renderBasicInfo(user, URL) {
   }
 
   const saveBasicInfoBtn = document.getElementById("save-basic-info-btn");
+  const deleteAccountBtn = document.getElementById("delete-account-final-btn");
   if (saveBasicInfoBtn) {
     saveBasicInfoBtn.addEventListener("click", () => {
       saveChangesToBasicInfo(user, URL); // Save the changes when the button is clicked
     });
+  }
+  if (deleteAccountBtn) {
+    deleteAccountBtn.addEventListener("click", () => {
+      deleteAccount(user, URL);
+    });
+  }
+}
+
+async function deleteAccount(user, URL) {
+  try {
+    const response = await fetch(
+      `${URL}/${user.username}`,
+      makeOptions("DELETE", null, true)
+    ).then(handleHttpErrors);
+    alert(
+      "Your account has been deleted - you will now be directed to the home page"
+    );
+
+    window.router.navigate("/logout");
+  } catch (err) {
+    throw new Error("Could not delete account: " + err);
   }
 }
 
@@ -379,7 +401,6 @@ async function renderSkills(user) {
 }
 
 async function renderProjects(user) {
-  console.log(user.projects);
   const myProjectsContainer = document.getElementById("my-projects");
   myProjectsContainer.innerHTML = user.projects
     ? user.projects
