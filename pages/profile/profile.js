@@ -228,10 +228,10 @@ async function deleteAccount(user, URL) {
       `${URL}/${user.username}`,
       makeOptions("DELETE", null, true)
     ).then(handleHttpErrors);
-    showMessage(
-      "successful-delete-message",
-      "Account has now been deleted - you will be direction to the home page"
+    alert(
+      "Your account has been deleted - you will now be directed to the home page"
     );
+
     window.router.navigate("/logout");
   } catch (err) {
     throw new Error("Could not delete account: " + err);
