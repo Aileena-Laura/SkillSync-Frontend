@@ -29,7 +29,7 @@ async function login() {
       handleHttpErrors(r)
     );
     storeLoginDetails(res);
-    window.router.navigate("/");
+    window.router.navigate("/dashboard");
   } catch (err) {
     responseStatus.style.color = "darkred";
     if (err.apiError) {
