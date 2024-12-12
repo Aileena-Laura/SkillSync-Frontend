@@ -1,9 +1,10 @@
 html {
   scroll-behavior: smooth;
+  overflow: auto;
 }
 
 #content {
-  padding-top: 11rem;
+  padding-top: 0rem;
 }
 
 /* LogoSS(1) */
@@ -35,6 +36,34 @@ html {
 /* ################################### navbar ################################# */
 nav {
   height: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #007bff;
 }
 /* ############################################################################ */
 
@@ -62,13 +91,13 @@ nav {
   bottom: 5px;
   right: 5px;
   transform: translate(50%, 50%);
-  width: 40px; /* Consistent width for the circle */
-  height: 40px; /* Consistent height for the circle */
-  font-size: 1.5rem; /* Slightly adjusted font size */
-  background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: 2px solid white;
-  border-radius: 50%; /* Makes the button round */
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,12 +106,12 @@ nav {
 }
 
 .profile-image-container:hover .edit-icon {
-  opacity: 1; /* Show icon when hovering */
+  opacity: 1;
 }
 
 .edit-icon:hover {
-  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
-  transform: translate(50%, 50%) scale(1.1); /* Slightly enlarge the button */
+  background-color: rgba(0, 0, 0, 0.7);
+  transform: translate(50%, 50%) scale(1.1);
 }
 
 /* ############################################################################ */
@@ -91,35 +120,9 @@ nav {
   display: none;
 }
 
-#location-suggestions {
-  display: block; /* Ensure the list is displayed */
-  position: absolute; /* Position it relative to the input field */
-  z-index: 1055; /* Ensure it appears above the modal */
-  max-height: 200px; /* Optional: Limit the height for scrolling */
-  overflow-y: auto; /* Enable scroll for long lists */
-  list-style: none; /* Remove default bullets */
-  padding: 0; /* Remove default padding */
-  margin: 0; /* Remove default margin */
-  background-color: #fff; /* Ensure a white background */
-  border: 1px solid #ccc; /* Add a border */
-  border-radius: 4px; /* Round the corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
-}
-#location-suggestions li {
-  padding: 8px 12px; /* Add padding for items */
-  cursor: pointer; /* Add a pointer cursor */
-}
-#location-suggestions li:hover {
-  background-color: #f0f0f0; /* Highlight on hover */
-}
-
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
   background: linear-gradient(120deg, #231f33, #6c21dc);
   background-size: 200% 200%;
   animation: gradientAnimation 10s ease infinite;
@@ -173,22 +176,7 @@ input[type="password"] {
   border: 1px solid #f6f6f6;
   border-radius: 5px;
 }
-/*
-button {
-  padding: 10px;
-  background-color: #231f33;
-  color: #f6f6f6;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  width: 100%;
-}
 
-button:hover {
-  background-color: #555;
-}*/
-
-/* CSS */
 button {
   background: linear-gradient(to bottom right, #6c21dc, #80b4f6);
   border: 0;
@@ -196,76 +184,67 @@ button {
   color: #ffffff;
   cursor: pointer;
   display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 2.5;
-  outline: transparent;
   padding: 0 1rem;
   text-align: center;
-  text-decoration: none;
   transition: box-shadow 0.2s ease-in-out;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
 }
 
-button:not([disabled]):focus {
-  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-    -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
-    0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
-}
-
+button:not([disabled]):focus,
 button:not([disabled]):hover {
   box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
     -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
     0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
 }
 
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: #f8f8f8;
-  padding: 10px 0;
+#content-sections {
+  display: flex;
+  flex-direction: column; /* Stack sections vertically */
+  align-items: center;    /* Center horizontally */
+  justify-content: center; /* Optional: center vertically if the parent allows it */
+  max-width: 800px;        /* Optional: constrain the width for better readability */
+  margin: 0 auto;          /* Center horizontally relative to the page */
+  padding: 2rem;           /* Add padding around the content for spacing */
+  background-color: #f6f6f6;
+  box-sizing: border-box;  /* Ensure padding doesn't add to the width */
+}
+
+#content-sections section {
+  margin-bottom: 2rem;     /* Add spacing between sections */
+  text-align: center;      /* Center align text (optional) */
+}
+
+#hero-image {
+  position: relative;
+  text-align: center;       /* Ensure the image and title are centered */
+}
+
+#hero-image img {
+  width: 100%;             /* Ensure the image scales to the viewport */
+  max-height: 500px;       /* Optional: constrain the height */
+  object-fit: cover;       /* Maintain aspect ratio */
+}
+
+#hero-image .title {
+  position: absolute;
+  top: 50%;                /* Center the title vertically over the image */
+  left: 50%;               /* Center the title horizontally */
+  transform: translate(-50%, -50%); /* Shift it back to the true center */
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Improve text readability */
   text-align: center;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-nav ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: flex;
-  justify-content: space-around;
+#how-it-works-img,
+#companies-img,
+#students-img,
+#success-img {
+  height: 22rem;
 }
 
-nav a {
-  text-decoration: none;
-  color: #333;
-  font-weight: bold;
-  transition: color 0.3s;
-}
 
-nav a:hover {
-  color: #007bff;
-}
 
-section {
-  padding: 100px 20px;
-  min-height: 100vh;  /* Each section takes at least the full viewport height */
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
 
-section:nth-child(odd) {
-  background-color: #f0f0f0;
-}
 
-section:nth-child(even) {
-  background-color: #e0e0e0;
-}
