@@ -1,13 +1,31 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors } from "../../utils.js";
+import { handleHttpErrors, makeOptions } from "../../utils.js";
 
 const URL = API_URL + "/user-with-role/student";
-let role = null;
+const FIELDS_URL = API_URL + "/fields-of-study";
 let responseStatus;
 
 export function initSignupStudent() {
   responseStatus = document.getElementById("status");
   document.getElementById("btn-signup").onclick = signupStudent;
+  populateFieldsOfStudy();
+}
+
+async function populateFieldsOfStudy() {
+  const fieldSelect = document.getElementById("select-field-of-study");
+  try {
+    const fieldsOfStudy = await fetch(FIELDS_URL).then(handleHttpErrors);
+    fieldsOfStudy.forEach((field) => {
+      const option = document.createElement("option");
+      option.value = field;
+      option.textContent = field.replace("_", " "); // Format enum names nicely
+      fieldSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Error fetching fields of study:", err);
+    responseStatus.innerText =
+      "Failed to load fields of study. Try again later.";
+  }
 }
 
 async function signupStudent(evt) {
@@ -17,6 +35,7 @@ async function signupStudent(evt) {
   const password = document.getElementById("input-password").value;
   const firstName = document.getElementById("input-firstName").value;
   const lastName = document.getElementById("input-lastName").value;
+  const fieldOfStudy = document.getElementById("select-field-of-study").value;
   const confirmPassword = document.getElementById(
     "input-password-confirm"
   ).value;
@@ -26,16 +45,24 @@ async function signupStudent(evt) {
     return;
   }
 
-  role = "STUDENT";
+  const role = "STUDENT";
 
-  const user = { username, email, password, role, firstName, lastName };
-  const options = {
+  const body = {
+    username,
+    email,
+    password,
+    role,
+    firstName,
+    lastName,
+    fieldOfStudy,
+  };
+  /* const options = {
     method: "POST",
     headers: { "Content-type": "application/json" },
     body: JSON.stringify(user),
-  };
+  }; */
   try {
-    await fetch(URL, options).then(handleHttpErrors);
+    await fetch(URL, makeOptions("POST", body, false)).then(handleHttpErrors);
     window.router.navigate(
       "/login?msg=" + "You have successfully signed up. Please login"
     );

@@ -293,3 +293,26 @@ textarea {
   resize: vertical; /* Optional: Allow vertical resizing of textarea */
   width: 100%; /* Optional: Ensure full width */
 }
+
+.fieldGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Add spacing between the dropdown and the button */
+}
+
+.fieldGroup select {
+  flex-grow: 1; /* Ensure the select box takes the available width */
+}
+
+#fields-content {
+  margin-top: 1rem;
+}
+
+.h7 {
+  font-size: 0.75rem; /* Smaller than Bootstrap's <h6> size (0.85rem) */
+  font-weight: 700; /* Normal font weight, not bold */
+  line-height: 1.2; /* Consistent with Bootstrap's heading line height */
+  margin: 0; /* Reset margins if needed */
+  color: inherit; /* Inherit color to match context */
+  font-style: b;
+}

@@ -10,6 +10,7 @@ const URLStudent = API_URL + "/student";
 const URLCompany = API_URL + "/company";
 const URLProject = API_URL + "/project";
 const URLSKill = API_URL + "/skill";
+const FIELDS_URL = API_URL + "/fields-of-study";
 let messageTimeout;
 
 export function initDashboard() {
@@ -29,6 +30,20 @@ async function fetchSkills() {
     return skills; // Assuming it returns an array of skill objects
   } catch (error) {
     console.error("Error fetching skills:", error);
+  }
+}
+
+async function fetchFieldsOfStudy() {
+  try {
+    // Fetch the fields of study from the API and handle errors
+    const fieldsOfStudy = await fetch(
+      FIELDS_URL,
+      makeOptions("GET", false, true)
+    ).then(handleHttpErrors);
+
+    return fieldsOfStudy; // Return the array as is
+  } catch (err) {
+    console.error("Error fetching fields of study:", err);
   }
 }
 
@@ -56,6 +71,8 @@ async function fetchUserAndRenderPage() {
     if (user.role == "STUDENT") {
     } else if (user.role == "COMPANY") {
       renderProjects(user);
+      initializeSkillAdder();
+      initializeFieldAdder();
     }
   } catch (err) {
     if (err.apiError) {
@@ -83,19 +100,43 @@ async function renderProjects(user) {
             )
             .join("");
 
+          // Generate field tags
+          const fieldTags = project.requiredFieldsOfStudy
+            .map(
+              (field) =>
+                `<span class="badge bg-primary me-1">${sanitizeString(
+                  formatEnumName(field)
+                )}</span>`
+            )
+            .join("");
+
           return `
-              <div id="project-${project.id}" class="card mb-2">
-                <div class="card-header">
-                  <h5 class="card-title">${sanitizeString(project.title)}</h5>
+            <div id="project-${project.id}" class="card mb-2">
+              <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="card-title mb-0">${sanitizeString(
+                  project.title
+                )}</h5>
+                <button 
+                  type="button" 
+                  class="btn-close" 
+                  aria-label="Close" 
+                  data-id="${project.id}">
+                </button>
+              </div>
+              <div class="card-body">
+              <p class="h7">Description:</p>
+                <p>${sanitizeString(project.description)}</p>
+                <div class="skills-container">
+                  <p class="h7">Skills:</p>
+                  ${skillTags || "<small>No skills listed</small>"}
                 </div>
-                <div class="card-body">
-                  <p>${sanitizeString(project.description)}</p>
-                  <div class="skills-container">
-                    ${skillTags || "<small>No skills listed</small>"}
-                  </div>
+                <div class="fields-container mt-2">
+                  <p class="h7">Fields of Study:</p>
+                  ${fieldTags || "<small>No fields of study listed</small>"}
                 </div>
               </div>
-            `;
+            </div>
+          `;
         })
         .join("")
     : "<p>No projects added</p>";
@@ -106,7 +147,75 @@ async function renderProjects(user) {
     addProject(user);
   });
 
-  initializeSkillAdder();
+  document.querySelectorAll(".btn-close").forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const projectId = event.target.dataset.id;
+      if (projectId) {
+        deleteProject(projectId);
+      }
+    });
+  });
+}
+
+async function initializeFieldAdder() {
+  const fieldsContainer = document.getElementById("fields-content");
+  const addFieldButton = document.getElementById("add-field-button");
+
+  // Clear the fields container each time
+  fieldsContainer.replaceChildren();
+
+  // Fetch the predefined fields of study
+  const fieldsOfStudy = await fetchFieldsOfStudy();
+
+  // Replace the button to remove all previous listeners
+  const newAddFieldButton = addFieldButton.cloneNode(true);
+  addFieldButton.replaceWith(newAddFieldButton);
+
+  // Add a single event listener to the new button
+  newAddFieldButton.addEventListener("click", () => {
+    const fieldGroup = document.createElement("div");
+    fieldGroup.classList.add(
+      "fieldGroup",
+      "d-flex",
+      "align-items-center",
+      "mb-2"
+    );
+
+    // Create a dropdown for selecting fields of study
+    const fieldSelect = document.createElement("select");
+    fieldSelect.classList.add(
+      "form-select",
+      "me-2",
+      "flex-grow-1",
+      "fieldSelect"
+    );
+    fieldsOfStudy.forEach((field) => {
+      const option = document.createElement("option");
+      option.value = field;
+      option.textContent = formatEnumName(field);
+      fieldSelect.appendChild(option);
+    });
+
+    // Add the dropdown to the group
+    fieldGroup.appendChild(fieldSelect);
+
+    // Create a remove button
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.classList.add("btn", "btn-danger", "btn-sm");
+    removeButton.textContent = "Remove";
+
+    // Append the button to the group
+    fieldGroup.appendChild(removeButton);
+
+    // Add the group to the container
+    fieldsContainer.appendChild(fieldGroup);
+
+    // Add remove functionality to the newly added button
+    removeButton.addEventListener("click", () => {
+      fieldsContainer.removeChild(fieldGroup);
+    });
+  });
 }
 
 async function initializeSkillAdder() {
@@ -126,32 +235,44 @@ async function initializeSkillAdder() {
   // Add a single event listener to the new button
   newAddSkillButton.addEventListener("click", () => {
     const skillGroup = document.createElement("div");
-    skillGroup.classList.add("skillGroup");
+    skillGroup.classList.add(
+      "skillGroup",
+      "d-flex",
+      "align-items-center",
+      "mb-2"
+    );
 
     // Create a dropdown for selecting skill from the fetched skills
     const skillSelect = document.createElement("select");
-    skillSelect.classList.add("skillSelect");
+    skillSelect.classList.add(
+      "form-select",
+      "me-2",
+      "flex-grow-1",
+      "skillSelect"
+    );
     skills.forEach((skill) => {
       const option = document.createElement("option");
-      option.value = skill.id; // Use only the skillName for the option's value and text
-      option.textContent = skill.skillName; // Display the skillName in the dropdown
+      option.value = skill.id; // Use skill ID as value
+      option.textContent = skill.skillName; // Display skill name
       skillSelect.appendChild(option);
     });
 
-    skillGroup.innerHTML = `
-        <label>Skill Name:</label>
-      `;
+    // Add the dropdown to the group
     skillGroup.appendChild(skillSelect);
 
+    // Create a remove button
     const removeButton = document.createElement("button");
     removeButton.type = "button";
-    removeButton.classList.add("removeSkillButton");
+    removeButton.classList.add("btn", "btn-danger", "btn-sm");
     removeButton.textContent = "Remove";
 
+    // Append the button to the group
     skillGroup.appendChild(removeButton);
+
+    // Add the group to the container
     skillsContainer.appendChild(skillGroup);
 
-    // Add remove functionality to the newly added skill
+    // Add remove functionality to the newly added button
     removeButton.addEventListener("click", () => {
       skillsContainer.removeChild(skillGroup);
     });
@@ -160,34 +281,44 @@ async function initializeSkillAdder() {
 
 function clearModal() {
   const skillsContainer = document.getElementById("skills-content");
-  skillsContainer.replaceChildren(); // Clear all existing skills
+  skillsContainer.replaceChildren();
+
+  const fieldsContainer = document.getElementById("fields-content");
+  fieldsContainer.replaceChildren();
 }
 
 async function addProject(user) {
-  console.log(user);
   try {
     const title = document.getElementById("title").value;
     const description = document.getElementById("description").value;
 
-    // Collect skill IDs - ensure we get the skill IDs from the selects in each skillGroup
+    // Collect skills
     const skillGroups = document.querySelectorAll(".skillGroup");
-
     const requiredSkills = Array.from(skillGroups)
       .map((group) => {
-        const skillSelect = group.querySelector(".skillSelect"); // Ensure this is the right class
-        const skillId = skillSelect ? parseInt(skillSelect.value, 10) : null; // Parse the selected value as an integer (ID)
+        const skillSelect = group.querySelector(".skillSelect");
+        const skillId = skillSelect ? parseInt(skillSelect.value, 10) : null;
         return skillId;
       })
-      .filter((skillId) => skillId !== null); // Remove any null values
+      .filter((skillId) => skillId !== null);
+
+    // Collect fields of study
+    const fieldGroups = document.querySelectorAll(".fieldGroup");
+    const requiredFieldsOfStudy = Array.from(fieldGroups)
+      .map((group) => {
+        const fieldSelect = group.querySelector(".fieldSelect");
+        return fieldSelect ? fieldSelect.value : null;
+      })
+      .filter((field) => field !== null);
 
     // Create the body for the POST request
     const body = {
       title,
       description,
       requiredSkills,
+      requiredFieldsOfStudy, // Include fields of study
       companyId: user.username, // Assuming 'username' is the company ID
     };
-    console.log(body);
 
     // Send the request to create the project
     const newProject = await fetch(
@@ -195,9 +326,33 @@ async function addProject(user) {
       makeOptions("POST", body, true)
     ).then(handleHttpErrors);
 
-    // Optionally, handle the new project data if needed
-    //addSkillToUI(newSkill);
+    console.log("New project added:", newProject);
   } catch (error) {
     console.error("Error saving project:", error);
   }
+}
+
+async function deleteProject(projectId) {
+  try {
+    const response = await fetch(
+      `${URLProject}/${projectId}`,
+      makeOptions("DELETE", null, true)
+    ).then(handleHttpErrors);
+
+    console.log(response);
+    // Optionally re-fetch and re-render the projects after deletion
+    const updatedUser = await fetchUser();
+    renderProjects(updatedUser.user);
+  } catch (error) {
+    console.error(`Error deleting project:`, error);
+  }
+}
+
+function formatEnumName(value) {
+  // Replace underscores with spaces and capitalize each word
+  return value
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
 }
