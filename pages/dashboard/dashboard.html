@@ -22,7 +22,7 @@
     tabindex="-1"
     aria-labelledby="modal-title"
   >
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <!-- Modal content-->
       <div class="modal-content">
         <div class="modal-header">
@@ -32,19 +32,66 @@
           </button>
         </div>
         <div class="modal-body">
-          <div class="form-group">
-            <div>
-              <label for="title">Project Title:</label>
-              <input type="text" id="title" name="title" required />
+          <!-- Add a row for two columns -->
+          <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="title" class="form-label">Project Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label"
+                  >Project Description:</label
+                >
+                <textarea
+                  id="description"
+                  name="description"
+                  class="form-control"
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
             </div>
-            <div>
-              <label for="description">Project Description:</label>
-              <textarea id="description" name="description" required></textarea>
-            </div>
-            <div id="skills-container">
-              <label>Required Skills:</label>
-              <button type="button" id="add-skill-button">Add Skill</button>
-              <div id="skills-content"></div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="skills-container" class="form-label"
+                  >Required Skills:</label
+                >
+                <div id="skills-container">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary mb-2"
+                    id="add-skill-button"
+                  >
+                    Add Skill
+                  </button>
+                  <div id="skills-content"></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="fields-of-study" class="form-label"
+                  >Required Fields of Study:</label
+                >
+                <div id="fields-container">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary mb-2"
+                    id="add-field-button"
+                  >
+                    Add Field
+                  </button>
+                  <div id="fields-content"></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
