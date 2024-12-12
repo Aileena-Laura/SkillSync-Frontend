@@ -7,31 +7,163 @@ html {
   padding-top: 0rem;
 }
 
-/* LogoSS(1) */
-#logo-1 {
-  width: 43px;
-  height: 40px;
-  left: 25px;
-  top: 19px;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background: linear-gradient(120deg, #231f33, #6c21dc);
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s ease infinite;
 }
 
-#logo-2 {
-  width: 72px;
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-.row label {
-  margin-top: 1.5em;
-  vertical-align: middle;
-  text-align: right;
+/* Hero Section Styling */
+#hero-image {
+  position: relative;
+  text-align: center;
 }
 
-.row input {
-  margin-top: 1em;
-  padding: 0.35em;
-  border-radius: 4px;
+#hero-image img {
   width: 100%;
-  border: 1px solid lightgray;
+  max-height: 500px;
+  object-fit: cover;
+  filter: brightness(70%);
 }
+
+#hero-image .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#hero-image h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#hero-image h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+/* Content Sections */
+#content-sections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.7); /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+#content-sections section {
+  margin-bottom: 3rem;
+  text-align: center;
+  width: 100%;
+}
+
+#content-sections h1, #content-sections h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+#content-sections h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+#content-sections h2 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+/* Section Images Styling */
+#how-it-works-img,
+#companies-img,
+#students-img,
+#success-img {
+  height: 300px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+}
+
+/* Content Text Styling */
+#content-sections p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+/* List Styling */
+ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+ul li {
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+ul li strong {
+  color: #6c21dc;
+}
+
+ul li:before {
+  content: "✔️";
+  margin-right: 10px;
+  color: #6c21dc;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  #hero-image h1 {
+    font-size: 2rem;
+  }
+
+  #hero-image h2 {
+    font-size: 1rem;
+  }
+
+  #content-sections {
+    padding: 2rem;
+  }
+
+  #content-sections h1, #content-sections h2 {
+    font-size: 1.5rem;
+  }
+}
+
+
+
+
 
 /* ################################### navbar ################################# */
 nav {
@@ -115,48 +247,6 @@ nav a:hover {
 }
 
 /* ############################################################################ */
-
-.hidden {
-  display: none;
-}
-
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background: linear-gradient(120deg, #231f33, #6c21dc);
-  background-size: 200% 200%;
-  animation: gradientAnimation 10s ease infinite;
-}
-
-@keyframes gradientAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.container {
-  text-align: center;
-}
-
-.login-box {
-  background-color: #f6f6f6;
-  padding: 20px;
-  border-radius: 10px;
-  width: 350px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-h1 {
-  margin-bottom: 20px;
-  font-size: 24px;
-}
-
 form {
   display: flex;
   flex-direction: column;
@@ -176,75 +266,28 @@ input[type="password"] {
   border: 1px solid #f6f6f6;
   border-radius: 5px;
 }
-
-button {
-  background: linear-gradient(to bottom right, #6c21dc, #80b4f6);
-  border: 0;
-  border-radius: 12px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 2.5;
-  padding: 0 1rem;
-  text-align: center;
-  transition: box-shadow 0.2s ease-in-out;
+/* LogoSS(1) */
+#logo-1 {
+  width: 43px;
+  height: 40px;
+  left: 25px;
+  top: 19px;
 }
 
-button:not([disabled]):focus,
-button:not([disabled]):hover {
-  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-    -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
-    0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
+#logo-2 {
+  width: 72px;
 }
 
-#content-sections {
-  display: flex;
-  flex-direction: column; /* Stack sections vertically */
-  align-items: center;    /* Center horizontally */
-  justify-content: center; /* Optional: center vertically if the parent allows it */
-  max-width: 800px;        /* Optional: constrain the width for better readability */
-  margin: 0 auto;          /* Center horizontally relative to the page */
-  padding: 2rem;           /* Add padding around the content for spacing */
-  background-color: #f6f6f6;
-  box-sizing: border-box;  /* Ensure padding doesn't add to the width */
+.row label {
+  margin-top: 1.5em;
+  vertical-align: middle;
+  text-align: right;
 }
 
-#content-sections section {
-  margin-bottom: 2rem;     /* Add spacing between sections */
-  text-align: center;      /* Center align text (optional) */
+.row input {
+  margin-top: 1em;
+  padding: 0.35em;
+  border-radius: 4px;
+  width: 100%;
+  border: 1px solid lightgray;
 }
-
-#hero-image {
-  position: relative;
-  text-align: center;       /* Ensure the image and title are centered */
-}
-
-#hero-image img {
-  width: 100%;             /* Ensure the image scales to the viewport */
-  max-height: 500px;       /* Optional: constrain the height */
-  object-fit: cover;       /* Maintain aspect ratio */
-}
-
-#hero-image .title {
-  position: absolute;
-  top: 50%;                /* Center the title vertically over the image */
-  left: 50%;               /* Center the title horizontally */
-  transform: translate(-50%, -50%); /* Shift it back to the true center */
-  color: white;
-  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Improve text readability */
-  text-align: center;
-}
-
-#how-it-works-img,
-#companies-img,
-#students-img,
-#success-img {
-  height: 22rem;
-}
-
-
-
-
-
