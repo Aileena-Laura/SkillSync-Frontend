@@ -49,6 +49,17 @@ async function fetchUser() {
   }
 }
 
+async function fetchSkills() {
+  try {
+    const skills = await fetch(URLSKill, makeOptions("GET", null, true)).then(
+      handleHttpErrors
+    );
+    return skills; // Assuming it returns an array of skill objects
+  } catch (error) {
+    console.error("Error fetching skills:", error);
+  }
+}
+
 async function fetchUserAndRenderPage() {
   try {
     const { user, URL } = await fetchUser();
@@ -94,27 +105,23 @@ async function renderStudentProfile(user, URL) {
 
 async function saveSkill(username) {
   try {
-    const body = {
-      skillName: document.getElementById("input-skill-name").value,
-      experience: document.getElementById("skill-experience").value,
-      studentId: username,
-    };
+    const skillId = document.getElementById("select-skill").value;
 
     const newSkill = await fetch(
-      `${API_URL}/skill`,
-      makeOptions("Post", body, true)
+      `${URLStudent}/${username}/skill/${skillId}`,
+      makeOptions("PATCH", false, true)
     ).then(handleHttpErrors);
 
-    addSkillToUI(newSkill);
+    addSkillToUI(username, newSkill);
   } catch (error) {
     console.error("Error saving skill:", error);
   }
 }
 
-async function deleteSkillFromBackend(id) {
+async function deleteSkillFromBackend(username, skillId) {
   try {
     const response = await fetch(
-      `${URLSKill}/${id}`,
+      `${URLStudent}/${username}/skill/${skillId}`,
       makeOptions("DELETE", null, true)
     ).then(handleHttpErrors, fetchUserAndRenderPage);
   } catch (err) {
@@ -188,7 +195,7 @@ async function renderBasicInfo(user, URL) {
         user.location || "Not specified"
       )}</p></div></div><hr>
       <div class="row"><div class="col-sm-4"><p class="mb-0">Education</p></div><div class="col-sm-8"><p class="text-muted mb-0">${sanitizeString(
-        user.education || "Not specified"
+        user.education.fieldOfStudy || "Not specified"
       )}</p></div></div>
     `;
   } else if (user.role === "COMPANY") {
@@ -395,18 +402,36 @@ async function renderSkills(user) {
 
   if (user.skills && user.skills.length > 0) {
     user.skills.forEach((skill) => {
-      addSkillToUI(skill);
+      addSkillToUI(user.username, skill);
+    });
+  }
+
+  // Populate skill dropdown dynamically
+  const skillSelect = document.getElementById("select-skill");
+  if (skillSelect) {
+    const availableSkills = await fetchSkills();
+
+    // Use `document.createElement` to populate the dropdown
+    skillSelect.innerHTML = ""; // Clear existing options
+    availableSkills.forEach((skill) => {
+      const option = document.createElement("option");
+      option.value = skill.id; // Use the correct property for the value
+      option.textContent = skill.skillName; // Use the correct property for the display text
+      skillSelect.appendChild(option);
     });
   }
 }
 
 async function renderProjects(user) {
+  console.log(user);
   const myProjectsContainer = document.getElementById("my-projects");
   myProjectsContainer.innerHTML = user.projects
     ? user.projects
         .map(
           (project) =>
-            `<div class="card mb-2"><div class="card-body">${sanitizeString(
+            `<div id="project-${
+              project.id
+            }" class="card mb-2"><div class="card-body">${sanitizeString(
               project.title
             )}</div></div>`
         )
@@ -414,7 +439,7 @@ async function renderProjects(user) {
     : "No projects added";
 }
 
-function addSkillToUI(skill) {
+function addSkillToUI(username, skill) {
   const skillsContainer = document.getElementById("skills-container");
 
   // Create the new skill card element
@@ -445,52 +470,10 @@ function addSkillToUI(skill) {
   // Add event listener for deleting the skill
   deleteButton.addEventListener("click", async () => {
     try {
-      await deleteSkillFromBackend(skill.id);
+      await deleteSkillFromBackend(username, skill.id);
       skillCard.remove();
     } catch (err) {
       console.error("Error deleting skill:", err);
     }
   });
-}
-
-//TODO project handling
-async function renderCompanyProfile1(user, URL) {
-  try {
-    // Posted Projects
-    const postedProjectsContainer = document.getElementById("my-projects");
-    postedProjectsContainer.innerHTML = user.projects
-      ? user.projects
-          .map(
-            (project) =>
-              `<div class="card mb-2"><div class="card-body">${sanitizeString(
-                project.title
-              )}</div></div>`
-          )
-          .join("")
-      : "No posted projects";
-
-    // Get the existing card header
-    const projectsCardHeader = document
-      .querySelector("#my-projects")
-      .closest(".card")
-      .querySelector(".card-header");
-
-    // Add the flexbox layout to the card-header
-    projectsCardHeader.classList.add(
-      "d-flex",
-      "justify-content-between",
-      "align-items-center"
-    );
-
-    // Create the "Add Project" button
-    const addProjectButton = document.createElement("button");
-    addProjectButton.id = "add-project";
-    addProjectButton.classList.add("btn", "btn-outline-primary", "btn-sm");
-    addProjectButton.textContent = "Add Project";
-
-    // Append the "Add Project" button to the card-header
-    projectsCardHeader.appendChild(addProjectButton);
-  } catch (error) {
-    console.error("Error rendering company profile:", error);
-  }
 }

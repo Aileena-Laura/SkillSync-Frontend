@@ -11,20 +11,27 @@ import { initLogin, toggleLoginStatus, logout } from "./pages/login/login.js";
 import { initSignupStudent } from "./pages/signup/signup-student.js";
 import { initSignupCompany } from "./pages/signup/signup-company.js";
 import { initProfile } from "./pages/profile/profile.js";
+import { initDashboard } from "./pages/dashboard/dashboard.js";
 import { initHome } from "./pages/home/home.js";
-
 
 //If token existed, for example after a refresh, set UI accordingly
 const token = localStorage.getItem("token");
 toggleLoginStatus(token);
 
 window.addEventListener("load", async () => {
-  const templateSignupStudent = await loadTemplate("./pages/signup/signup-student.html");
+  const templateSignupStudent = await loadTemplate(
+    "./pages/signup/signup-student.html"
+  );
   const templateProfile = await loadTemplate("./pages/profile/profile.html");
-  const templateSignupCompany = await loadTemplate("./pages/signup/signup-company.html");
+  const templateSignupCompany = await loadTemplate(
+    "./pages/signup/signup-company.html"
+  );
   const templateLogin = await loadTemplate("./pages/login/login.html");
   const templateNotFound = await loadTemplate("./pages/notFound/notFound.html");
   const templateHome = await loadTemplate("./pages/home/home.html");
+  const templateDashboard = await loadTemplate(
+    "./pages/dashboard/dashboard.html"
+  );
 
   adjustForMissingHash();
 
@@ -41,8 +48,8 @@ window.addEventListener("load", async () => {
     })
     .on({
       "/": () => {
-        renderTemplate(templateHome, "content"); 
-        initHome();  
+        renderTemplate(templateHome, "content");
+        //initHome();
       },
       "/dropdown-0": () => {
         alert(0);
@@ -50,8 +57,9 @@ window.addEventListener("load", async () => {
       "/dropdown-1": () => {
         alert(1);
       },
-      "/dropdown-2": () => {
-        alert(2);
+      "/dashboard": () => {
+        renderTemplate(templateDashboard, "content");
+        initDashboard();
       },
       "/signup/student": () => {
         renderTemplate(templateSignupStudent, "content");

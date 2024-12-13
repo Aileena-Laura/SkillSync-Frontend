@@ -1,0 +1,118 @@
+<template>
+  <section id="dashboard-section">
+    <div class="dashboard-projects-container container-fluid py-5">
+      <div class="dashboard-header">
+        <h1>Your posted projects</h1>
+        <button
+          data-bs-target="#add-project-modal"
+          data-bs-toggle="modal"
+          id="add-project-btn"
+        >
+          Add
+        </button>
+      </div>
+      <div id="my-projects"></div>
+    </div>
+  </section>
+
+  <!-- Modal -->
+  <div
+    id="add-project-modal"
+    class="modal fade"
+    tabindex="-1"
+    aria-labelledby="modal-title"
+  >
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Create Project</h4>
+          <button type="button" class="close" data-bs-dismiss="modal">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Add a row for two columns -->
+          <div class="row">
+            <!-- Left Column -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="title" class="form-label">Project Title:</label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  class="form-control"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="description" class="form-label"
+                  >Project Description:</label
+                >
+                <textarea
+                  id="description"
+                  name="description"
+                  class="form-control"
+                  rows="5"
+                  required
+                ></textarea>
+              </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="skills-container" class="form-label"
+                  >Required Skills:</label
+                >
+                <div id="skills-container">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary mb-2"
+                    id="add-skill-button"
+                  >
+                    Add Skill
+                  </button>
+                  <div id="skills-content"></div>
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="fields-of-study" class="form-label"
+                  >Required Fields of Study:</label
+                >
+                <div id="fields-container">
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-primary mb-2"
+                    id="add-field-button"
+                  >
+                    Add Field
+                  </button>
+                  <div id="fields-content"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="save-project-btn"
+            data-bs-dismiss="modal"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
