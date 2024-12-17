@@ -1,44 +1,198 @@
 html {
   scroll-behavior: smooth;
+  overflow: auto;
 }
 
-#content {
-  padding-top: 11rem;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  background: linear-gradient(120deg, #231f33, #6c21dc);
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s ease infinite;
 }
 
-/* LogoSS(1) */
-#logo-1 {
-  width: 43px;
-  height: 40px;
-  left: 25px;
-  top: 19px;
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
-#logo-2 {
-  width: 72px;
+/* Hero Section Styling */
+#hero-image {
+  position: relative;
+  text-align: center;
 }
 
-.row label {
-  margin-top: 1.5em;
-  vertical-align: middle;
-  text-align: right;
-}
-
-.row input {
-  margin-top: 1em;
-  padding: 0.35em;
-  border-radius: 4px;
+#hero-image img {
   width: 100%;
-  border: 1px solid lightgray;
+  max-height: 500px;
+  object-fit: cover;
+  filter: brightness(70%);
 }
 
-/* ################################### navbar ################################# */
+#hero-image .title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+#hero-image h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+#hero-image h2 {
+  font-size: 1.5rem;
+  font-weight: 300;
+}
+
+/* Content Sections Styling */
+#content-sections {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem;
+  background: rgba(255, 255, 255, 0.7); /* Glassmorphism effect */
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+#content-sections section {
+  margin-bottom: 3rem;
+  text-align: center;
+  width: 100%;
+}
+
+#content-sections h1,
+#content-sections h2 {
+  font-family: 'Roboto', sans-serif;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+#content-sections h1 {
+  font-size: 2.5rem;
+  font-weight: bold;
+}
+
+#content-sections h2 {
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+/* Section Images Styling */
+#how-it-works-img,
+#companies-img,
+#students-img,
+#success-img {
+  height: 300px;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  object-fit: cover;
+  margin-bottom: 1.5rem;
+}
+
+/* Content Text Styling */
+#content-sections p {
+  font-size: 1rem;
+  color: #555;
+  line-height: 1.6;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+
+/* List Styling */
+ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1rem;
+  color: #555;
+}
+
+ul li {
+  margin-bottom: 1rem;
+  font-weight: 400;
+}
+
+ul li strong {
+  color: #6c21dc;
+}
+
+ul li:before {
+  content: "✔️";
+  margin-right: 10px;
+  color: #6c21dc;
+  font-size: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  #hero-image h1 {
+    font-size: 2rem;
+  }
+
+  #hero-image h2 {
+    font-size: 1rem;
+  }
+
+  #content-sections {
+    padding: 2rem;
+  }
+
+  #content-sections h1,
+  #content-sections h2 {
+    font-size: 1.5rem;
+  }
+}
+
+/* Navbar Styling */
 nav {
   height: 50px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background-color: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  z-index: 10;
 }
-/* ############################################################################ */
 
-/* ########################## Profile pen edit style ##########################*/
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  padding: 10px 15px;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+/* Profile Pen Edit Styling */
 .profile-image-container {
   position: relative;
   display: inline-block;
@@ -62,13 +216,13 @@ nav {
   bottom: 5px;
   right: 5px;
   transform: translate(50%, 50%);
-  width: 40px; /* Consistent width for the circle */
-  height: 40px; /* Consistent height for the circle */
-  font-size: 1.5rem; /* Slightly adjusted font size */
-  background-color: rgba(0, 0, 0, 0.5); /* Dark background */
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  background-color: rgba(0, 0, 0, 0.5);
   color: white;
   border: 2px solid white;
-  border-radius: 50%; /* Makes the button round */
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -77,10 +231,11 @@ nav {
 }
 
 .profile-image-container:hover .edit-icon {
-  opacity: 1; /* Show icon when hovering */
+  opacity: 1;
 }
 
 .edit-icon:hover {
+
   background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
   transform: translate(50%, 50%) scale(1.1); /* Slightly enlarge the button */
 }
@@ -151,8 +306,10 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: 24px;
+
 }
 
+/* Form Styling */
 form {
   display: flex;
   flex-direction: column;
@@ -172,62 +329,33 @@ input[type="password"] {
   border: 1px solid #f6f6f6;
   border-radius: 5px;
 }
-/*
-button {
-  padding: 10px;
-  background-color: #231f33;
-  color: #f6f6f6;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+
+/* Logo Styling */
+#logo-1 {
+  width: 43px;
+  height: 40px;
+  left: 25px;
+  top: 19px;
+}
+
+#logo-2 {
+  width: 72px;
+}
+
+.row label {
+  margin-top: 1.5em;
+  vertical-align: middle;
+  text-align: right;
+}
+
+.row input {
+  margin-top: 1em;
+  padding: 0.35em;
+  border-radius: 4px;
   width: 100%;
-}
 
-button:hover {
-  background-color: #555;
-}*/
+  border: 1px solid lightgray;
 
-/* CSS */
-button {
-  background: linear-gradient(to bottom right, #6c21dc, #80b4f6);
-  border: 0;
-  border-radius: 12px;
-  color: #ffffff;
-  cursor: pointer;
-  display: inline-block;
-  font-family: -apple-system, system-ui, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 2.5;
-  outline: transparent;
-  padding: 0 1rem;
-  text-align: center;
-  text-decoration: none;
-  transition: box-shadow 0.2s ease-in-out;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  white-space: nowrap;
-}
-
-button:not([disabled]):focus {
-  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-    -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
-    0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
-}
-
-button:not([disabled]):hover {
-  box-shadow: 0 0 0.25rem rgba(0, 0, 0, 0.5),
-    -0.125rem -0.125rem 1rem rgba(211, 167, 252, 0.5),
-    0.125rem 0.125rem 1rem rgba(127, 68, 254, 0.963);
-}
-
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   background-color: #f8f8f8;
   padding: 10px 0;
   text-align: center;
@@ -267,6 +395,7 @@ section:nth-child(odd) {
 
 section:nth-child(even) {
   background-color: #e0e0e0;
+
 }
 
 #dashboard-section {
