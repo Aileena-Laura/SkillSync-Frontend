@@ -235,8 +235,78 @@ nav a:hover {
 }
 
 .edit-icon:hover {
-  background-color: rgba(0, 0, 0, 0.7);
-  transform: translate(50%, 50%) scale(1.1);
+
+  background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
+  transform: translate(50%, 50%) scale(1.1); /* Slightly enlarge the button */
+}
+
+/* ############################################################################ */
+
+.hidden {
+  display: none;
+}
+
+#location-suggestions {
+  display: block; /* Ensure the list is displayed */
+  position: absolute; /* Position it relative to the input field */
+  z-index: 1055; /* Ensure it appears above the modal */
+  max-height: 200px; /* Optional: Limit the height for scrolling */
+  overflow-y: auto; /* Enable scroll for long lists */
+  list-style: none; /* Remove default bullets */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  background-color: #fff; /* Ensure a white background */
+  border: 1px solid #ccc; /* Add a border */
+  border-radius: 4px; /* Round the corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: Add shadow */
+}
+#location-suggestions li {
+  padding: 8px 12px; /* Add padding for items */
+  cursor: pointer; /* Add a pointer cursor */
+}
+#location-suggestions li:hover {
+  background-color: #f0f0f0; /* Highlight on hover */
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(120deg, #231f33, #6c21dc);
+  background-size: 200% 200%;
+  animation: gradientAnimation 10s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.container {
+  text-align: center;
+}
+
+.login-box {
+  background-color: #f6f6f6;
+  padding: 20px;
+  border-radius: 10px;
+  width: 350px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  margin-bottom: 20px;
+  font-size: 24px;
+
 }
 
 /* Form Styling */
@@ -283,5 +353,95 @@ input[type="password"] {
   padding: 0.35em;
   border-radius: 4px;
   width: 100%;
+
   border: 1px solid lightgray;
+
+  background-color: #f8f8f8;
+  padding: 10px 0;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-around;
+}
+
+nav a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: #007bff;
+}
+
+section {
+  padding: 100px 20px;
+  min-height: 100vh; /* Each section takes at least the full viewport height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+section:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+
+section:nth-child(even) {
+  background-color: #e0e0e0;
+
+}
+
+#dashboard-section {
+  width: 100vw;
+}
+
+#dashboard-section .dashboard-projects-container {
+  width: 50%;
+}
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.form-group div {
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  margin-bottom: 1rem; /* Add spacing between groups */
+}
+
+textarea {
+  resize: vertical; /* Optional: Allow vertical resizing of textarea */
+  width: 100%; /* Optional: Ensure full width */
+}
+
+.fieldGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; /* Add spacing between the dropdown and the button */
+}
+
+.fieldGroup select {
+  flex-grow: 1; /* Ensure the select box takes the available width */
+}
+
+#fields-content {
+  margin-top: 1rem;
+}
+
+.h7 {
+  font-size: 0.75rem; /* Smaller than Bootstrap's <h6> size (0.85rem) */
+  font-weight: 700; /* Normal font weight, not bold */
+  line-height: 1.2; /* Consistent with Bootstrap's heading line height */
+  margin: 0; /* Reset margins if needed */
+  color: inherit; /* Inherit color to match context */
+  font-style: b;
 }
