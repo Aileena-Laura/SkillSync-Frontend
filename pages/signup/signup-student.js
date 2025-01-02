@@ -56,11 +56,7 @@ async function signupStudent(evt) {
     lastName,
     fieldOfStudy,
   };
-  /* const options = {
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify(user),
-  }; */
+
   try {
     await fetch(URL, makeOptions("POST", body, false)).then(handleHttpErrors);
     window.router.navigate(

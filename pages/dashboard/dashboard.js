@@ -15,11 +15,20 @@ let messageTimeout;
 
 export function initDashboard() {
   fetchUserAndRenderPage();
+}
+
+function addEventListeners(user) {
   document
     .getElementById("add-project-modal")
     .addEventListener("hidden.bs.modal", () => {
       clearModal(); // Reset modal when closed
     });
+
+  const saveProjectBtn = document.getElementById("save-project-btn");
+
+  saveProjectBtn.addEventListener("click", () => {
+    addProject(user);
+  });
 }
 
 async function fetchSkills() {
@@ -67,6 +76,7 @@ async function fetchUser() {
 async function fetchUserAndRenderPage() {
   try {
     const { user, URL } = await fetchUser();
+    addEventListeners(user);
 
     if (user.role == "STUDENT") {
     } else if (user.role == "COMPANY") {
@@ -141,79 +151,12 @@ async function renderProjects(user) {
         .join("")
     : "<p>No projects added</p>";
 
-  const saveProjectBtn = document.getElementById("save-project-btn");
-
-  saveProjectBtn.addEventListener("click", () => {
-    addProject(user);
-  });
-
   document.querySelectorAll(".btn-close").forEach((button) => {
     button.addEventListener("click", (event) => {
       const projectId = event.target.dataset.id;
       if (projectId) {
         deleteProject(projectId);
       }
-    });
-  });
-}
-
-async function initializeFieldAdder() {
-  const fieldsContainer = document.getElementById("fields-content");
-  const addFieldButton = document.getElementById("add-field-button");
-
-  // Clear the fields container each time
-  fieldsContainer.replaceChildren();
-
-  // Fetch the predefined fields of study
-  const fieldsOfStudy = await fetchFieldsOfStudy();
-
-  // Replace the button to remove all previous listeners
-  const newAddFieldButton = addFieldButton.cloneNode(true);
-  addFieldButton.replaceWith(newAddFieldButton);
-
-  // Add a single event listener to the new button
-  newAddFieldButton.addEventListener("click", () => {
-    const fieldGroup = document.createElement("div");
-    fieldGroup.classList.add(
-      "fieldGroup",
-      "d-flex",
-      "align-items-center",
-      "mb-2"
-    );
-
-    // Create a dropdown for selecting fields of study
-    const fieldSelect = document.createElement("select");
-    fieldSelect.classList.add(
-      "form-select",
-      "me-2",
-      "flex-grow-1",
-      "fieldSelect"
-    );
-    fieldsOfStudy.forEach((field) => {
-      const option = document.createElement("option");
-      option.value = field;
-      option.textContent = formatEnumName(field);
-      fieldSelect.appendChild(option);
-    });
-
-    // Add the dropdown to the group
-    fieldGroup.appendChild(fieldSelect);
-
-    // Create a remove button
-    const removeButton = document.createElement("button");
-    removeButton.type = "button";
-    removeButton.classList.add("btn", "btn-danger", "btn-sm");
-    removeButton.textContent = "Remove";
-
-    // Append the button to the group
-    fieldGroup.appendChild(removeButton);
-
-    // Add the group to the container
-    fieldsContainer.appendChild(fieldGroup);
-
-    // Add remove functionality to the newly added button
-    removeButton.addEventListener("click", () => {
-      fieldsContainer.removeChild(fieldGroup);
     });
   });
 }
@@ -228,11 +171,11 @@ async function initializeSkillAdder() {
   // Fetch the predefined skills
   const skills = await fetchSkills();
 
-  // Replace the button to remove all previous listeners
+  // Remove any existing event listeners to avoid duplicates
   const newAddSkillButton = addSkillButton.cloneNode(true);
   addSkillButton.replaceWith(newAddSkillButton);
 
-  // Add a single event listener to the new button
+  // Add event listener to the new button
   newAddSkillButton.addEventListener("click", () => {
     const skillGroup = document.createElement("div");
     skillGroup.classList.add(
@@ -279,6 +222,67 @@ async function initializeSkillAdder() {
   });
 }
 
+async function initializeFieldAdder() {
+  const fieldsContainer = document.getElementById("fields-content");
+  const addFieldButton = document.getElementById("add-field-button");
+
+  // Clear the fields container each time
+  fieldsContainer.replaceChildren();
+
+  // Fetch the predefined fields of study
+  const fieldsOfStudy = await fetchFieldsOfStudy();
+
+  // Remove any existing event listeners to avoid duplicates
+  const newAddFieldButton = addFieldButton.cloneNode(true);
+  addFieldButton.replaceWith(newAddFieldButton);
+
+  // Add event listener to the new button
+  newAddFieldButton.addEventListener("click", () => {
+    const fieldGroup = document.createElement("div");
+    fieldGroup.classList.add(
+      "fieldGroup",
+      "d-flex",
+      "align-items-center",
+      "mb-2"
+    );
+
+    // Create a dropdown for selecting fields of study
+    const fieldSelect = document.createElement("select");
+    fieldSelect.classList.add(
+      "form-select",
+      "me-2",
+      "flex-grow-1",
+      "fieldSelect"
+    );
+    fieldsOfStudy.forEach((field) => {
+      const option = document.createElement("option");
+      option.value = field;
+      option.textContent = formatEnumName(field);
+      fieldSelect.appendChild(option);
+    });
+
+    // Add the dropdown to the group
+    fieldGroup.appendChild(fieldSelect);
+
+    // Create a remove button
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.classList.add("btn", "btn-danger", "btn-sm");
+    removeButton.textContent = "Remove";
+
+    // Append the button to the group
+    fieldGroup.appendChild(removeButton);
+
+    // Add the group to the container
+    fieldsContainer.appendChild(fieldGroup);
+
+    // Add remove functionality to the newly added button
+    removeButton.addEventListener("click", () => {
+      fieldsContainer.removeChild(fieldGroup);
+    });
+  });
+}
+
 function clearModal() {
   const skillsContainer = document.getElementById("skills-content");
   skillsContainer.replaceChildren();
@@ -311,22 +315,18 @@ async function addProject(user) {
       })
       .filter((field) => field !== null);
 
-    // Create the body for the POST request
     const body = {
       title,
       description,
       requiredSkills,
-      requiredFieldsOfStudy, // Include fields of study
-      companyId: user.username, // Assuming 'username' is the company ID
+      requiredFieldsOfStudy,
+      companyId: user.username,
     };
 
-    // Send the request to create the project
     const newProject = await fetch(
       `${URLProject}`,
       makeOptions("POST", body, true)
     ).then(handleHttpErrors);
-
-    console.log("New project added:", newProject);
   } catch (error) {
     console.error("Error saving project:", error);
   }
@@ -339,8 +339,6 @@ async function deleteProject(projectId) {
       makeOptions("DELETE", null, true)
     ).then(handleHttpErrors);
 
-    console.log(response);
-    // Optionally re-fetch and re-render the projects after deletion
     const updatedUser = await fetchUser();
     renderProjects(updatedUser.user);
   } catch (error) {
