@@ -126,12 +126,6 @@ async function renderProjects(user) {
                 <h5 class="card-title mb-0">${sanitizeString(
                   project.title
                 )}</h5>
-                <button 
-                  type="button" 
-                  class="btn-close" 
-                  aria-label="Close" 
-                  data-id="${project.id}">
-                </button>
               </div>
               <div class="card-body">
               <p class="h7">Description:</p>
@@ -327,6 +321,9 @@ async function addProject(user) {
       `${URLProject}`,
       makeOptions("POST", body, true)
     ).then(handleHttpErrors);
+
+    const updatedUser = await fetchUser();
+    renderProjects(updatedUser.user);
   } catch (error) {
     console.error("Error saving project:", error);
   }
