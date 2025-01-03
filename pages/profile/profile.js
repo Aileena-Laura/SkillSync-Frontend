@@ -424,19 +424,34 @@ async function renderSkills(user) {
 
 async function renderProjects(user) {
   console.log(user);
+
+  // Get the container where projects will be rendered
   const myProjectsContainer = document.getElementById("my-projects");
-  myProjectsContainer.innerHTML = user.projects
-    ? user.projects
-        .map(
-          (project) =>
-            `<div id="project-${
-              project.id
-            }" class="card mb-2"><div class="card-body">${sanitizeString(
-              project.title
-            )}</div></div>`
-        )
-        .join("")
-    : "No projects added";
+  const profileProjectsSection = document.getElementById(
+    "profile-projects-section"
+  );
+
+  // If the user is a company, show the projects section
+  if (user.role === "COMPANY") {
+    profileProjectsSection.style.display = "block"; // Show the projects section
+
+    // Render the projects in the container
+    myProjectsContainer.innerHTML = user.projects
+      ? user.projects
+          .map(
+            (project) =>
+              `<div id="project-${
+                project.id
+              }" class="card mb-2"><div class="card-body">${sanitizeString(
+                project.title
+              )}</div></div>`
+          )
+          .join("")
+      : "No projects added";
+  } else {
+    // If the user is a student, hide the projects section
+    profileProjectsSection.style.display = "none";
+  }
 }
 
 function addSkillToUI(username, skill) {
