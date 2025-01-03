@@ -37,16 +37,18 @@ function updatePaginationControls(currentPage, totalPages) {
   nextButton.disabled = currentPage >= totalPages - 1;
 }
 
-async function fetchAndRenderProjects(page, size) {
-  console.log(size);
+async function fetchAndRenderProjects(page, size, searchTerm) {
   try {
     const user = await fetchUser(URLStudent);
-    const url = `${URLProject}/match?studentId=${user.username}&page=${page}&size=${size}`;
+    let url = `${URLProject}/match?studentId=${user.username}&page=${page}&size=${size}`;
+    if (searchTerm) {
+      url = `${URLProject}/search?term=${searchTerm}&userId=${user.username}&page=${page}&size=${size}`;
+    }
+
     const res = await fetch(url, makeOptions("GET", null, true)).then(
       handleHttpErrors
     );
-    console.log(res);
-
+    console.log(res.content);
     renderProjects(res.content);
     updatePaginationControls(page, res.totalPages);
   } catch (err) {
@@ -142,7 +144,9 @@ function getPageAndSizeFromInfo(pageInfoElement) {
 }
 
 function setupEventHandlers() {
-  console.log("company");
+  const searchForm = document.getElementById("apply-filters");
+  searchForm.addEventListener("click", handleSearchSubmit);
+
   const companyDetails = (evt) => {
     const clicked = evt.target;
     console.log(clicked);
@@ -152,4 +156,17 @@ function setupEventHandlers() {
     }
   };
   document.getElementById("match-projects").onclick = companyDetails;
+}
+
+// Handle search form submission
+function handleSearchSubmit(evt) {
+  evt.preventDefault();
+
+  const searchTerm = document.getElementById("search-term").value;
+
+  // Reset current page to 0 when a new search is submitted
+  currentPage = 0;
+
+  // Fetch and render projects based on search criteria
+  fetchAndRenderProjects(currentPage, pageSize, searchTerm);
 }

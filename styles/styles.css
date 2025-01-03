@@ -477,3 +477,41 @@ textarea {
   padding: 1rem; /* Add padding */
   text-align: left; /* Align text to the left */
 }
+
+/* Ensure the header and search container are aligned horizontally */
+.discover-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure space between the heading and the search form */
+  margin-bottom: 20px;
+}
+
+/* Style the search container */
+.search-container {
+  display: flex;
+  gap: 15px; /* Adjust the gap between input fields and button */
+}
+
+/* Style the input fields and button */
+.search-container input {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  height: 36px; /* Set a consistent height for input fields */
+}
+
+.search-container button {
+  padding: 8px 15px;
+  font-size: 14px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  height: 36px; /* Set the same height as input fields */
+}
+
+.search-container button:hover {
+  background-color: #0056b3;
+}
