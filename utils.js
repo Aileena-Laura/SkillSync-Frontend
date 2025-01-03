@@ -169,3 +169,102 @@ export function sanitizeStringWithTableRows(tableRows) {
 export function sanitizeString(input) {
   return DOMPurify.sanitize(input);
 }
+
+export function updateNavbarLink() {
+  const navbarLink = document.getElementById("nav-link-discover");
+  const role = localStorage.getItem("role");
+
+  if (role === "STUDENT") {
+    navbarLink.href = "/discover";
+  } else if (role === "COMPANY") {
+    navbarLink.href = "/dashboard";
+  } else {
+    navbarLink.href = "/"; // Fallback for unknown roles
+  }
+}
+
+export async function fetchUser(URL) {
+  try {
+    const username = localStorage.getItem("user");
+
+    const user = await fetch(
+      `${URL}/${username}`,
+      makeOptions("GET", null, true)
+    ).then(handleHttpErrors);
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+  }
+}
+
+export async function fetchCompany(URL, companyId) {
+  try {
+    const user = await fetch(
+      `${URL}/${companyId}`,
+      makeOptions("GET", null, true)
+    ).then(handleHttpErrors);
+
+    return user;
+  } catch (error) {
+    console.error("Error fetching profile:", error);
+  }
+}
+
+export function formatEnumName(value) {
+  // Replace underscores with spaces and capitalize each word
+  return value
+    .toLowerCase()
+    .split("_")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export function renderProjects(projects, containerId) {
+  const projectsContainer = document.getElementById(containerId);
+  projectsContainer.innerHTML = projects
+    .map((project) => generateProjectCard(project))
+    .join("");
+}
+
+export function generateProjectCard(project) {
+  const skillTags = project.requiredSkills
+    .map(
+      (skill) =>
+        `<span class="badge bg-secondary me-1">${sanitizeString(
+          skill.skillName
+        )}</span>`
+    )
+    .join("");
+
+  const fieldTags = project.requiredFieldsOfStudy
+    .map(
+      (field) =>
+        `<span class="badge bg-primary me-1">${sanitizeString(
+          formatEnumName(field)
+        )}</span>`
+    )
+    .join("");
+
+  return `
+        <div id="project_${project.id}" class="card project-card-info mb-2">
+          <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="card-title mb-0">${sanitizeString(
+              project.title
+            )}</h5>           
+          </div>
+          <div class="card-body">
+            <p class="h7">Description:</p>
+            <p>${sanitizeString(project.description)}</p>
+            <div class="skills-container">
+              <p class="h7">Skills:</p>
+              ${skillTags || "<small>No skills listed</small>"}
+            </div>
+            <div class="fields-container mt-2">
+              <p class="h7">Fields of Study:</p>
+              ${fieldTags || "<small>No fields of study listed</small>"}
+            </div>            
+          </div>
+        </div>
+      `;
+}
