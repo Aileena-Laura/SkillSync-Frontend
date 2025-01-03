@@ -1,5 +1,5 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors } from "../../utils.js";
+import { handleHttpErrors, updateNavbarLink } from "../../utils.js";
 
 let responseStatus;
 export function initLogin(match) {
@@ -29,7 +29,17 @@ async function login() {
       handleHttpErrors(r)
     );
     storeLoginDetails(res);
-    window.router.navigate("/dashboard");
+
+    // Redirect based on the user's role
+    const userRole = res.role;
+    if (userRole === "STUDENT") {
+      window.router.navigate("/discover");
+    } else if (userRole === "COMPANY") {
+      window.router.navigate("/dashboard");
+    } else {
+      console.warn("Unknown user role. Redirecting to homepage.");
+      window.router.navigate("/"); // Fallback to homepage
+    }
   } catch (err) {
     responseStatus.style.color = "darkred";
     if (err.apiError) {
@@ -61,6 +71,9 @@ export function toggleLoginStatus(loggedIn) {
   const loggedInUserTxt = loggedIn
     ? `User: ${localStorage["user"]} (${localStorage["role"]})`
     : "";
+
+  updateNavbarLink();
+
   if (responseStatus) {
     responseStatus.innerText = "";
   }

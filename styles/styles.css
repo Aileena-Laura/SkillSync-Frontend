@@ -4,7 +4,7 @@ html {
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   margin: 0;
   background: linear-gradient(120deg, #231f33, #6c21dc);
   background-size: 200% 200%;
@@ -80,7 +80,7 @@ body {
 
 #content-sections h1,
 #content-sections h2 {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   color: #333;
   margin-bottom: 1.5rem;
 }
@@ -235,7 +235,6 @@ nav a:hover {
 }
 
 .edit-icon:hover {
-
   background-color: rgba(0, 0, 0, 0.7); /* Darker background on hover */
   transform: translate(50%, 50%) scale(1.1); /* Slightly enlarge the button */
 }
@@ -306,7 +305,6 @@ body {
 h1 {
   margin-bottom: 20px;
   font-size: 24px;
-
 }
 
 /* Form Styling */
@@ -395,18 +393,20 @@ section:nth-child(odd) {
 
 section:nth-child(even) {
   background-color: #e0e0e0;
-
 }
 
-#dashboard-section {
+#dashboard-section,
+#discover-section {
   width: 100vw;
 }
 
-#dashboard-section .dashboard-projects-container {
+#dashboard-section .dashboard-projects-container,
+#discover-section .discover-projects-container {
   width: 50%;
 }
 
-.dashboard-header {
+.dashboard-header,
+.discover-header {
   display: flex;
   justify-content: space-between;
   margin-bottom: 1em;
@@ -444,4 +444,36 @@ textarea {
   margin: 0; /* Reset margins if needed */
   color: inherit; /* Inherit color to match context */
   font-style: b;
+}
+
+#company-projects {
+  display: flex;
+  flex-wrap: wrap; /* Allow cards to wrap to new rows */
+  justify-content: center; /* Center the cards */
+  gap: 1rem; /* Spacing between cards */
+}
+
+#company-projects .card {
+  flex: 1 1 calc(33.333% - 1rem); /* Take 1/3 of the container width minus gap */
+  max-width: 400px; /* Set a max width to prevent cards from being too wide */
+  min-width: 280px; /* Ensure cards don't shrink too much */
+  margin: 0 auto; /* Center-align cards */
+  box-sizing: border-box; /* Include padding and border in width */
+}
+
+@media (max-width: 768px) {
+  #company-projects .card {
+    flex: 1 1 calc(50% - 1rem); /* Take 1/2 width on medium screens */
+  }
+}
+
+@media (max-width: 576px) {
+  #company-projects .card {
+    flex: 1 1 100%; /* Full width for small screens */
+  }
+}
+
+#company-projects .card-body {
+  padding: 1rem; /* Add padding */
+  text-align: left; /* Align text to the left */
 }

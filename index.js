@@ -12,6 +12,8 @@ import { initSignupStudent } from "./pages/signup/signup-student.js";
 import { initSignupCompany } from "./pages/signup/signup-company.js";
 import { initProfile } from "./pages/profile/profile.js";
 import { initDashboard } from "./pages/dashboard/dashboard.js";
+import { initDiscover } from "./pages/discover/discover.js";
+import { initCompanyInfo } from "./pages/companyInfo/company-info.js";
 import { initHome } from "./pages/home/home.js";
 
 //If token existed, for example after a refresh, set UI accordingly
@@ -31,6 +33,10 @@ window.addEventListener("load", async () => {
   const templateHome = await loadTemplate("./pages/home/home.html");
   const templateDashboard = await loadTemplate(
     "./pages/dashboard/dashboard.html"
+  );
+  const templateDiscover = await loadTemplate("./pages/discover/discover.html");
+  const templateCompanyInfo = await loadTemplate(
+    "./pages/companyInfo/company-info.html"
   );
 
   adjustForMissingHash();
@@ -60,6 +66,14 @@ window.addEventListener("load", async () => {
       "/dashboard": () => {
         renderTemplate(templateDashboard, "content");
         initDashboard();
+      },
+      "/discover": () => {
+        renderTemplate(templateDiscover, "content");
+        initDiscover();
+      },
+      "/company-info": (match) => {
+        renderTemplate(templateCompanyInfo, "content");
+        initCompanyInfo(match);
       },
       "/signup/student": () => {
         renderTemplate(templateSignupStudent, "content");

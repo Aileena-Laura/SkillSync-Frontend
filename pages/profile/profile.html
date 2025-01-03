@@ -1,93 +1,81 @@
 <template>
-  <section>
-    <div class="container-fluid py-5">
-      <div class="row">
-        <!-- Profile Section -->
-        <div class="col-lg-4">
-          <div class="card mb-4">
-            <div class="card-body text-center position-relative">
-              <!-- Profile Picture with Hover Effect and Edit Icon -->
-              <div class="profile-image-container">
-                <img
-                  id="profile-picture"
-                  src="/images/user.png"
-                  alt="avatar"
-                  class="rounded-circle img-fluid profile-image"
-                />
-                <button class="edit-icon">
-                  <i class="fas fa-pen"></i>
-                </button>
-              </div>
-              <h5 id="user-name" class="my-3">Name</h5>
+  <div class="container-fluid py-5">
+    <div class="row">
+      <!-- Profile Section -->
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center position-relative">
+            <!-- Profile Picture with Hover Effect and Edit Icon -->
+            <div class="profile-image-container">
+              <img
+                id="profile-picture"
+                src="/images/user.png"
+                alt="avatar"
+                class="rounded-circle img-fluid profile-image"
+              />
             </div>
-          </div>
-
-          <!-- Profile Info Section -->
-          <div class="card mb-4">
-            <div class="card-header">Basic Info</div>
-            <div id="basic-info" class="card-body">
-              <!-- Content dynamically inserted -->
-            </div>
-            <div class="card-footer">
-              <button
-                id="edit-basic-info-btn"
-                class="btn btn-outline-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#edit-basic-info-modal"
-              >
-                Edit
-              </button>
-              <button
-                id="delete-account-btn"
-                class="btn btn-outline-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#delete-account-modal"
-              >
-                Delete
-              </button>
-            </div>
+            <h5 id="user-name" class="my-3">Name</h5>
           </div>
         </div>
 
-        <!-- Second Column (Description, Projects) -->
-        <div id="profile-second-column" class="col-lg-8">
-          <!-- Description -->
-          <div class="card mb-4">
-            <h5 class="card-header">Description</h5>
-            <div class="card-body">
-              <textarea
-                id="user-description"
-                class="form-control mb-3"
-                rows="4"
-              >
-              </textarea>
-              <button
-                id="save-description"
-                class="btn btn-outline-primary mb-3"
-              >
-                Save
-              </button>
-              <p id="description-message" style="color: green"></p>
-            </div>
+        <!-- Profile Info Section -->
+        <div class="card mb-4">
+          <div class="card-header">Basic Info</div>
+          <div id="basic-info" class="card-body">
+            <!-- Content dynamically inserted -->
           </div>
+          <div class="card-footer">
+            <button
+              id="edit-basic-info-btn"
+              class="btn btn-outline-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#edit-basic-info-modal"
+            >
+              Edit
+            </button>
+            <button
+              id="delete-account-btn"
+              class="btn btn-outline-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#delete-account-modal"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
 
-          <!-- Posted Projects (Company) or My Projects (Student) -->
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card mb-4">
-                <div class="card-header">
-                  <h5 class="card-title">Projects</h5>
-                </div>
-                <div id="my-projects" class="card-body">
-                  <!-- Projects dynamically inserted -->
-                </div>
+      <!-- Second Column (Description, Projects) -->
+      <div id="profile-second-column" class="col-lg-8">
+        <!-- Description -->
+        <div class="card mb-4">
+          <h5 class="card-header">Description</h5>
+          <div class="card-body">
+            <textarea id="user-description" class="form-control mb-3" rows="4">
+            </textarea>
+            <button id="save-description" class="btn btn-outline-primary mb-3">
+              Save
+            </button>
+            <p id="description-message" style="color: green"></p>
+          </div>
+        </div>
+
+        <!-- Posted Projects (Company) or My Projects (Student) -->
+        <div class="row">
+          <div class="col-md-12">
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">Projects</h5>
+              </div>
+              <div id="my-projects" class="card-body">
+                <!-- Projects dynamically inserted -->
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </section>
+  </div>
   <div
     class="modal fade"
     id="add-skill-modal"
