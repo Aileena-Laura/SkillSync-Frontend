@@ -36,7 +36,7 @@ async function fetchSkills() {
     const skills = await fetch(URLSKill, makeOptions("GET", null, true)).then(
       handleHttpErrors
     );
-    return skills; // Assuming it returns an array of skill objects
+    return skills;
   } catch (error) {
     console.error("Error fetching skills:", error);
   }
@@ -44,13 +44,13 @@ async function fetchSkills() {
 
 async function fetchFieldsOfStudy() {
   try {
-    // Fetch the fields of study from the API and handle errors
+    // Fetch the fields of study from the API
     const fieldsOfStudy = await fetch(
       FIELDS_URL,
       makeOptions("GET", false, true)
     ).then(handleHttpErrors);
 
-    return fieldsOfStudy; // Return the array as is
+    return fieldsOfStudy;
   } catch (err) {
     console.error("Error fetching fields of study:", err);
   }
@@ -165,7 +165,7 @@ async function initializeSkillAdder() {
   // Fetch the predefined skills
   const skills = await fetchSkills();
 
-  // Remove any existing event listeners to avoid duplicates
+  // Remove any existing event listeners
   const newAddSkillButton = addSkillButton.cloneNode(true);
   addSkillButton.replaceWith(newAddSkillButton);
 
