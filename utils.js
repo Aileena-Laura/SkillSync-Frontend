@@ -268,3 +268,12 @@ export function generateProjectCard(project) {
         </div>
       `;
 }
+
+export function clearMessage(elementId) {
+  const element = document.getElementById(elementId);
+  element.innerText = sanitizeString("");
+}
+
+export const loadingContent = `<div id="loading-spinner" class="spinner-border text-primary" role="status">
+<span class="sr-only"></span>
+</div>`;

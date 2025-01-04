@@ -3,9 +3,10 @@ import {
   handleHttpErrors,
   makeOptions,
   sanitizeString,
-  fetchGeoapifyAutocomplete,
   formatEnumName,
   fetchUser,
+  clearMessage,
+  loadingContent,
 } from "../../utils.js";
 
 const URLProject = API_URL + "/project";
@@ -14,6 +15,8 @@ let currentPage = 0; // Start at the first page
 const pageSize = 5; // Number of projects per page
 
 export function initDiscover() {
+  document.getElementById("match-projects").innerHTML =
+    sanitizeString(loadingContent);
   setupEventHandlers();
   setupPaginationControls();
   fetchAndRenderProjects(currentPage, pageSize);
@@ -48,12 +51,24 @@ async function fetchAndRenderProjects(page, size, searchTerm) {
     const res = await fetch(url, makeOptions("GET", null, true)).then(
       handleHttpErrors
     );
-    console.log(res.content);
-    renderProjects(res.content);
-    updatePaginationControls(page, res.totalPages);
+    if (res.content.length == 0) {
+      displayMessage(
+        "response-message",
+        "No projects found matching your search"
+      );
+    } else {
+      clearMessage("response-message");
+      renderProjects(res.content);
+      updatePaginationControls(page, res.totalPages);
+    }
   } catch (err) {
     console.error("Failed to fetch projects:", err);
   }
+}
+
+function displayMessage(elementId, message) {
+  const element = document.getElementById(elementId);
+  element.innerText = sanitizeString(message);
 }
 
 function renderProjects(projects) {

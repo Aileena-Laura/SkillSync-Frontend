@@ -18,7 +18,7 @@ async function populateFieldsOfStudy() {
     fieldsOfStudy.forEach((field) => {
       const option = document.createElement("option");
       option.value = field;
-      option.textContent = field.replace("_", " "); // Format enum names nicely
+      option.textContent = field.replace("_", " "); // Format enum names
       fieldSelect.appendChild(option);
     });
   } catch (err) {
@@ -68,7 +68,6 @@ async function signupStudent(evt) {
       const errorMessages = Object.values(err.apiError);
       const lastErrorMessage = errorMessages[errorMessages.length - 1];
 
-      // Display only the last error message
       responseStatus.innerText = "Registration failed: " + lastErrorMessage;
     } else {
       responseStatus.innerText = err.message;
