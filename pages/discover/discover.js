@@ -134,7 +134,7 @@ function handlePrevPage() {
   const [currentPage] = getPageAndSizeFromInfo(pageInfo);
 
   if (currentPage > 0) {
-    fetchAndRenderProjects(currentPage - 1, pageSize); // Default page size is 5
+    fetchAndRenderProjects(currentPage - 1, pageSize);
   }
 }
 
@@ -143,16 +143,16 @@ function handleNextPage() {
   const [currentPage, totalPages] = getPageAndSizeFromInfo(pageInfo);
 
   if (currentPage < totalPages - 1) {
-    fetchAndRenderProjects(currentPage + 1, pageSize); // Default page size is 5
+    fetchAndRenderProjects(currentPage + 1, pageSize);
   }
 }
 
 function getPageAndSizeFromInfo(pageInfoElement) {
-  const pageInfoText = pageInfoElement.innerText; // "Page 1 of 10"
+  const pageInfoText = pageInfoElement.innerText;
   const matches = pageInfoText.match(/Page (\d+) of (\d+)/);
   if (!matches) return [0, 0];
 
-  const currentPage = parseInt(matches[1], 10) - 1; // Convert to 0-based index
+  const currentPage = parseInt(matches[1], 10) - 1;
   const totalPages = parseInt(matches[2], 10);
 
   return [currentPage, totalPages];
