@@ -3,7 +3,7 @@ import {
   handleHttpErrors,
   makeOptions,
   sanitizeString,
-  fetchGeoapifyAutocomplete,
+  formatEnumName,
 } from "../../utils.js";
 
 const URLStudent = API_URL + "/student";
@@ -341,13 +341,4 @@ async function deleteProject(projectId) {
   } catch (error) {
     console.error(`Error deleting project:`, error);
   }
-}
-
-function formatEnumName(value) {
-  // Replace underscores with spaces and capitalize each word
-  return value
-    .toLowerCase()
-    .split("_")
-    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-    .join(" ");
 }

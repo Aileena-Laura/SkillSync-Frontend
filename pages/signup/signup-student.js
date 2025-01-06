@@ -1,5 +1,5 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors, makeOptions } from "../../utils.js";
+import { handleHttpErrors, makeOptions, formatEnumName } from "../../utils.js";
 
 const URL = API_URL + "/user-with-role/student";
 const FIELDS_URL = API_URL + "/fields-of-study";
@@ -18,7 +18,7 @@ async function populateFieldsOfStudy() {
     fieldsOfStudy.forEach((field) => {
       const option = document.createElement("option");
       option.value = field;
-      option.textContent = field.replace("", " "); // Format enum names
+      option.textContent = formatEnumName(field); // Format enum names
       fieldSelect.appendChild(option);
     });
   } catch (err) {
