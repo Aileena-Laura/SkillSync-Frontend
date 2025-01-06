@@ -1,5 +1,9 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors, fetchGeoapifyAutocomplete } from "../../utils.js"; // Import the geolocation utility
+import {
+  handleHttpErrors,
+  fetchGeoapifyAutocomplete,
+  makeOptions,
+} from "../../utils.js";
 
 const URL = API_URL + "/user-with-role/company";
 let role = null;
@@ -17,7 +21,7 @@ export function initSignupCompany() {
     const query = locationInput.value.trim();
 
     if (query) {
-      fetchGeoapifyAutocomplete(query, locationInput, suggestionsList); // Use the reusable utility function
+      fetchGeoapifyAutocomplete(query, locationInput, suggestionsList);
     } else {
       suggestionsList.innerHTML = ""; // Clear suggestions if input is empty
     }
@@ -75,17 +79,11 @@ async function signupCompany(evt) {
     role,
     companyName,
     website,
-    location, // Include location in the user object
-  };
-
-  const options = {
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify(user),
+    location,
   };
 
   try {
-    await fetch(URL, options).then(handleHttpErrors);
+    await fetch(URL, makeOptions("POST", user, false)).then(handleHttpErrors);
     window.router.navigate(
       "/login?msg=" + "You have successfully signed up. Please login"
     );
@@ -95,7 +93,6 @@ async function signupCompany(evt) {
       const errorMessages = Object.values(err.apiError);
       const lastErrorMessage = errorMessages[errorMessages.length - 1];
 
-      // Display only the last error message
       responseStatus.innerText = "Registration failed: " + lastErrorMessage;
     } else {
       responseStatus.innerText = err.message;

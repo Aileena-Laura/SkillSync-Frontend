@@ -36,7 +36,23 @@ function validatePassword(password) {
     return "Password must contain at least one number.";
   }
   return null; // Valid password
-}
+  }
+  
+  async function populateFieldsOfStudy() {
+  const fieldSelect = document.getElementById("select-field-of-study");
+  try {
+    const fieldsOfStudy = await fetch(FIELDS_URL).then(handleHttpErrors);
+    fieldsOfStudy.forEach((field) => {
+      const option = document.createElement("option");
+      option.value = field;
+      option.textContent = field.replace("_", " "); // Format enum names
+      fieldSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Error fetching fields of study:", err);
+    responseStatus.innerText =
+      "Failed to load fields of study. Try again later.";
+  }
 
 // Sign up logic
 async function signupStudent(evt) {
@@ -93,7 +109,6 @@ async function signupStudent(evt) {
       const errorMessages = Object.values(err.apiError);
       const lastErrorMessage = errorMessages[errorMessages.length - 1];
 
-      // Display only the last error message
       responseStatus.innerText = "Registration failed: " + lastErrorMessage;
     } else {
       responseStatus.innerText = err.message;

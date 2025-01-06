@@ -4,6 +4,7 @@ import {
   makeOptions,
   sanitizeString,
   fetchGeoapifyAutocomplete,
+  clearMessage,
 } from "../../utils.js";
 
 const URLStudent = API_URL + "/student";
@@ -25,7 +26,7 @@ async function setupLocationAutocomplete() {
     const query = locationInput.value.trim();
 
     if (query) {
-      fetchGeoapifyAutocomplete(query, locationInput, suggestionsList); // Use the reusable utility function
+      fetchGeoapifyAutocomplete(query, locationInput, suggestionsList);
     } else {
       suggestionsList.innerHTML = ""; // Clear suggestions if input is empty
     }
@@ -54,7 +55,7 @@ async function fetchSkills() {
     const skills = await fetch(URLSKill, makeOptions("GET", null, true)).then(
       handleHttpErrors
     );
-    return skills; // Assuming it returns an array of skill objects
+    return skills;
   } catch (error) {
     console.error("Error fetching skills:", error);
   }
@@ -159,23 +160,18 @@ function showMessage(elementId, message, duration = 4000) {
   }, duration);
 }
 
-function clearMessage(elementId) {
-  const element = document.getElementById(elementId);
-  element.innerText = sanitizeString("");
-}
-
 async function renderProfilePictureAndName(user) {
   if (user.role === "STUDENT") {
     document.getElementById("profile-picture").src = sanitizeString(
       user.image || "/images/user.png"
-    ); // Sanitize image URL
+    );
     document.getElementById("user-name").textContent = sanitizeString(
       user.firstName + " " + user.lastName
     );
   } else if (user.role === "COMPANY") {
     document.getElementById("profile-picture").src = sanitizeString(
       user.image || "/images/user.png"
-    ); // Sanitize image URL
+    );
     document.getElementById("user-name").textContent = sanitizeString(
       user.companyName || "Company Name"
     );
@@ -219,7 +215,7 @@ async function renderBasicInfo(user, URL) {
   const deleteAccountBtn = document.getElementById("delete-account-final-btn");
   if (saveBasicInfoBtn) {
     saveBasicInfoBtn.addEventListener("click", () => {
-      saveChangesToBasicInfo(user, URL); // Save the changes when the button is clicked
+      saveChangesToBasicInfo(user, URL);
     });
   }
   if (deleteAccountBtn) {
@@ -245,7 +241,6 @@ async function deleteAccount(user, URL) {
   }
 }
 
-// Function to save the changes to the backend
 async function saveChangesToBasicInfo(user, URL) {
   try {
     const updatedEmail = document.getElementById("edit-email").value;
@@ -264,10 +259,9 @@ async function saveChangesToBasicInfo(user, URL) {
       body.website = document.getElementById("edit-website").value;
     }
 
-    // Send a PATCH request to update the user info
     const updatedUser = await fetch(
-      `${URL}/${user.username}`, // Endpoint for updating user profile
-      makeOptions("PATCH", body, true) // Using the helper function for fetch options
+      `${URL}/${user.username}`,
+      makeOptions("PATCH", body, true)
     ).then(handleHttpErrors);
 
     // On success, update the UI with the new values
@@ -309,17 +303,14 @@ function populateEditModal(user, isStudent) {
     lastNameField.value = sanitizeString(user.lastName || "");
     educationField.value = sanitizeString(user.education || "");
 
-    // Show student-related fields
     firstNameField.parentElement.classList.remove("hidden");
     lastNameField.parentElement.classList.remove("hidden");
     educationField.parentElement.classList.remove("hidden");
   } else {
-    console.log(isStudent);
     // For companies, show company-specific fields
     companyNameField.value = sanitizeString(user.companyName || "");
     websiteField.value = sanitizeString(user.website || "");
 
-    // Show company-related fields
     companyNameField.parentElement.classList.remove("hidden");
     websiteField.parentElement.classList.remove("hidden");
   }
@@ -406,17 +397,16 @@ async function renderSkills(user) {
     });
   }
 
-  // Populate skill dropdown dynamically
+  // Populate skill dropdown
   const skillSelect = document.getElementById("select-skill");
   if (skillSelect) {
     const availableSkills = await fetchSkills();
 
-    // Use `document.createElement` to populate the dropdown
     skillSelect.innerHTML = ""; // Clear existing options
     availableSkills.forEach((skill) => {
       const option = document.createElement("option");
-      option.value = skill.id; // Use the correct property for the value
-      option.textContent = skill.skillName; // Use the correct property for the display text
+      option.value = skill.id;
+      option.textContent = skill.skillName;
       skillSelect.appendChild(option);
     });
   }
@@ -424,19 +414,34 @@ async function renderSkills(user) {
 
 async function renderProjects(user) {
   console.log(user);
+
+  // Get the container where projects will be rendered
   const myProjectsContainer = document.getElementById("my-projects");
-  myProjectsContainer.innerHTML = user.projects
-    ? user.projects
-        .map(
-          (project) =>
-            `<div id="project-${
-              project.id
-            }" class="card mb-2"><div class="card-body">${sanitizeString(
-              project.title
-            )}</div></div>`
-        )
-        .join("")
-    : "No projects added";
+  const profileProjectsSection = document.getElementById(
+    "profile-projects-section"
+  );
+
+  // If the user is a company, show the projects section
+  if (user.role === "COMPANY") {
+    profileProjectsSection.style.display = "block"; // Show the projects section
+
+    // Render the projects in the container
+    myProjectsContainer.innerHTML = user.projects
+      ? user.projects
+          .map(
+            (project) =>
+              `<div id="project-${
+                project.id
+              }" class="card mb-2"><div class="card-body">${sanitizeString(
+                project.title
+              )}</div></div>`
+          )
+          .join("")
+      : "No projects added";
+  } else {
+    // If the user is a student, hide the projects section
+    profileProjectsSection.style.display = "none";
+  }
 }
 
 function addSkillToUI(username, skill) {

@@ -3,7 +3,7 @@
     <div class="signup-box">
       <h3>Sign up as a company</h3>
       <hr />
-      <form id="form">
+      <div id="form">
         <div class="row">
           <div class="col-md-6 mb-3">
             <!-- Username -->
@@ -14,7 +14,7 @@
               placeholder="username"
               required
             />
-
+            
             <!-- Email -->
             <label for="input-email">Email</label>
             <input
@@ -56,27 +56,17 @@
             />
           </div>
 
-          <div class="col-md-6 mb-3">
-            <!-- Industry -->
-            <label for="industry">Industry</label>
-            <input
-              type="text"
-              id="input-industry"
-              class="form-control"
-              name="industry"
-              placeholder="Industry"
-              required
-            />
-
-            <!-- Website -->
-            <label for="website">Website</label>
-            <input
-              type="url"
-              id="input-website"
-              class="form-control"
-              placeholder="Website"
-              name="website"
-            />
+        <!-- Second Column: Industry, Website, Location, Contact Email -->
+        <div class="col-md-6 mb-3">
+          <!-- Website -->
+          <label for="website">Website</label>
+          <input
+            type="url"
+            id="input-website"
+            class="form-control"
+            placeholder="Website"
+            name="website"
+          />
 
             <!-- Location -->
             <label for="location">Location</label>
@@ -116,7 +106,7 @@
             </button>
           </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
