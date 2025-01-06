@@ -24,6 +24,20 @@ export function initSignupCompany() {
   });
 }
 
+// Password validation function
+function validatePassword(password) {
+  const minLength = 8;
+  const hasNumber = /\d/;
+
+  if (password.length < minLength) {
+    return "Password must be at least 8 characters long.";
+  }
+  if (!hasNumber.test(password)) {
+    return "Password must contain at least one number.";
+  }
+  return null; // Valid password
+}
+
 // Sign up logic
 async function signupCompany(evt) {
   evt.preventDefault();
@@ -38,8 +52,17 @@ async function signupCompany(evt) {
   const website = document.getElementById("input-website").value;
   const location = document.getElementById("location").value; // Get location value
 
+  // Validate password
+  const passwordError = validatePassword(password);
+  if (passwordError) {
+    responseStatus.innerText = passwordError;
+    responseStatus.style.color = "darkred";
+    return;
+  }
+
   if (password !== confirmPassword) {
     responseStatus.innerText = "Passwords do not match.";
+    responseStatus.style.color = "darkred";
     return;
   }
 

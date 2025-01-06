@@ -1,130 +1,122 @@
 <template>
-  <h3 style="margin-top: 0.5em; min-height: 1em">Sign up as a company</h3>
-  <hr />
-  <div>
-    <form id="form" style="max-width: 900px">
-      <div class="row">
-        <div class="col-md-6 mb-3">
-          <!-- Username -->
-          <label for="input-username">Username</label>
-          <input
-            id="input-username"
-            class="form-control"
-            placeholder="username"
-            required
-          />
+  <div class="container">
+    <div class="signup-box">
+      <h3>Sign up as a company</h3>
+      <hr />
+      <form id="form">
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <!-- Username -->
+            <label for="input-username">Username</label>
+            <input
+              id="input-username"
+              class="form-control"
+              placeholder="username"
+              required
+            />
 
-          <!-- Email -->
-          <label for="input-email">Email</label>
-          <input
-            id="input-email"
-            class="form-control"
-            placeholder="email"
-            required
-          />
+            <!-- Email -->
+            <label for="input-email">Email</label>
+            <input
+              id="input-email"
+              class="form-control"
+              placeholder="email"
+              required
+            />
 
-          <!-- Company Name -->
-          <label for="companyName">Company Name</label>
-          <input
-            type="text"
-            id="input-company-name"
-            class="form-control"
-            name="companyName"
-            placeholder="Company Name"
-            required
-          />
+            <!-- Company Name -->
+            <label for="companyName">Company Name</label>
+            <input
+              type="text"
+              id="input-company-name"
+              class="form-control"
+              name="companyName"
+              placeholder="Company Name"
+              required
+            />
 
-          <!-- Password -->
-          <div class="row">
-            <div class="col-6 mb-3">
-              <label for="input-password">Password</label>
-              <input
-                type="password"
-                id="input-password"
-                class="form-control"
-                placeholder="password"
-                required
-              />
-            </div>
+            <!-- Password -->
+            <label for="input-password">Password</label>
+            <input
+              type="password"
+              id="input-password"
+              class="form-control"
+              placeholder="password"
+              required
+            />
 
             <!-- Confirm Password -->
-            <div class="col-6 mb-3">
-              <label for="input-password-confirm">Confirm Password</label>
-              <input
-                type="password"
-                id="input-password-confirm"
-                class="form-control"
-                placeholder="Confirm password"
-                required
-              />
-            </div>
+            <label for="input-password-confirm">Confirm Password</label>
+            <input
+              type="password"
+              id="input-password-confirm"
+              class="form-control"
+              placeholder="Confirm password"
+              required
+            />
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <!-- Industry -->
+            <label for="industry">Industry</label>
+            <input
+              type="text"
+              id="input-industry"
+              class="form-control"
+              name="industry"
+              placeholder="Industry"
+              required
+            />
+
+            <!-- Website -->
+            <label for="website">Website</label>
+            <input
+              type="url"
+              id="input-website"
+              class="form-control"
+              placeholder="Website"
+              name="website"
+            />
+
+            <!-- Location -->
+            <label for="location">Location</label>
+            <input
+              type="text"
+              id="location"
+              class="form-control"
+              name="location"
+              placeholder="Location"
+              required
+            />
+            <ul id="suggestions-list" class="mt-2"></ul>
+
+            <!-- Contact Email -->
+            <label for="contactEmail">Contact Email</label>
+            <input
+              type="email"
+              id="contactEmail"
+              class="form-control"
+              placeholder="Contact Email"
+              name="contactEmail"
+              required
+            />
           </div>
         </div>
 
-        <!-- Second Column: Industry, Website, Location, Contact Email -->
-        <div class="col-md-6 mb-3">
-          <!-- Industry -->
-          <label for="industry">Industry</label>
-          <input
-            type="text"
-            id="input-industry"
-            class="form-control"
-            name="industry"
-            placeholder="Industry"
-            required
-          />
-
-          <!-- Website -->
-          <label for="website">Website</label>
-          <input
-            type="url"
-            id="input-website"
-            class="form-control"
-            placeholder="Website"
-            name="website"
-          />
-
-          <!-- Location -->
-          <label for="location">Location</label>
-          <input
-            type="text"
-            id="location"
-            class="form-control"
-            name="location"
-            placeholder="Location"
-            required
-          />
-          <ul id="suggestions-list" class="mt-2"></ul>
-
-          <!-- Contact Email -->
-          <label for="contactEmail">Contact Email</label>
-          <input
-            type="email"
-            id="contactEmail"
-            class="form-control"
-            placeholder="Contact Email"
-            name="contactEmail"
-            required
-          />
+        <!-- Status message -->
+        <div class="row">
+          <p id="status" style="min-height: 1em; margin-top: 0.5em; color: red"></p>
         </div>
-      </div>
 
-      <!-- Status message -->
-      <div class="row">
-        <p
-          id="status"
-          style="min-height: 1em; margin-top: 0.5em; color: red"
-        ></p>
-      </div>
-
-      <!-- Submit button aligned with form -->
-      <div class="row">
-        <div class="col-12">
-          <button id="btn-signup" class="btn btn-primary w-100">
-            Register
-          </button>
+        <!-- Submit button aligned with form -->
+        <div class="row">
+          <div class="col-12">
+            <button id="btn-signup" class="btn btn-primary w-100">
+              Register
+            </button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>

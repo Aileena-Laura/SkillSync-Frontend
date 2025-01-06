@@ -1,44 +1,43 @@
 <template>
-  <h3 style="margin-top: 0.5em; min-height: 1em">Sign up as a student</h3>
-  <hr />
-  <div>
-    <div id="form" style="max-width: 900px">
-      <div class="row">
-        <input id="input-username" placeholder="username" required />
-        <input id="input-email" placeholder="email" required />
-        <input
-          type="password"
-          id="input-password"
-          placeholder="password"
-          required
-        />
-        <input
-          type="password"
-          id="input-password-confirm"
-          class="form-control"
-          placeholder="Confirm password"
-          required
-        />
-        <input id="input-firstName" placeholder="Firstname" required />
-        <input id="input-lastName" placeholder="Lastname" required />
+  <div class="container">
+    <div class="signup-box">
+      <h3>Sign up as a student</h3>
+      <hr />
+      <div id="form">
+        <div class="row">
+          <input id="input-username" placeholder="username" required />
+          <input id="input-email" placeholder="email" required />
+          <input
+            type="password"
+            id="input-password"
+            placeholder="password"
+            required
+          />
+          <input
+            type="password"
+            id="input-password-confirm"
+            class="form-control"
+            placeholder="Confirm password"
+            required
+          />
+          <input id="input-firstName" placeholder="Firstname" required />
+          <input id="input-lastName" placeholder="Lastname" required />
 
-        <div class="row" style="margin-top: 1em">
-          <select id="select-field-of-study" required>
-            <option value="" disabled selected>
-              Select your field of study
-            </option>
-          </select>
+          <div class="row">
+            <select id="select-field-of-study" required>
+              <option value="" disabled selected>
+                Select your field of study
+              </option>
+            </select>
+          </div>
         </div>
-      </div>
 
-      <div class="row">
-        <p
-          id="status"
-          style="min-height: 1em; margin-top: 0.5em; color: red"
-        ></p>
-      </div>
-      <div class="row" style="margin-top: 2em">
-        <button id="btn-signup" class="btn-primary">Register</button>
+        <div class="row">
+          <p id="status" style="min-height: 1em; margin-top: 0.5em; color: red"></p>
+        </div>
+        <div class="row">
+          <button id="btn-signup" class="btn-primary">Register</button>
+        </div>
       </div>
     </div>
   </div>
