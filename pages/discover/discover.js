@@ -42,10 +42,10 @@ function updatePaginationControls(currentPage, totalPages) {
 
 async function fetchAndRenderProjects(page, size, searchTerm) {
   try {
-    const user = await fetchUser(URLStudent);
-    let url = `${URLProject}/match?studentId=${user.username}&page=${page}&size=${size}`;
+    const username = localStorage.getItem("user");
+    let url = `${URLProject}/match?studentId=${username}&page=${page}&size=${size}`;
     if (searchTerm) {
-      url = `${URLProject}/search?term=${searchTerm}&userId=${user.username}&page=${page}&size=${size}`;
+      url = `${URLProject}/search?term=${searchTerm}&userId=${username}&page=${page}&size=${size}`;
     }
 
     const res = await fetch(url, makeOptions("GET", null, true)).then(
