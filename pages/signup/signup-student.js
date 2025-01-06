@@ -1,27 +1,31 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors, fetchGeoapifyAutocomplete } from "../../utils.js"; // Import the geolocation utility
+import { handleHttpErrors, makeOptions } from "../../utils.js";
 
 const URL = API_URL + "/user-with-role/student";
-let role = null;
+const FIELDS_URL = API_URL + "/fields-of-study";
 let responseStatus;
 
 export function initSignupStudent() {
   responseStatus = document.getElementById("status");
   document.getElementById("btn-signup").onclick = signupStudent;
+  populateFieldsOfStudy();
+}
 
-  // Initialize location autocomplete
-  const locationInput = document.getElementById("location");
-  const suggestionsList = document.getElementById("suggestions-list");
-
-  locationInput.addEventListener("input", function () {
-    const query = locationInput.value.trim();
-
-    if (query) {
-      fetchGeoapifyAutocomplete(query, locationInput, suggestionsList); // Use the reusable utility function
-    } else {
-      suggestionsList.innerHTML = ""; // Clear suggestions if input is empty
-    }
-  });
+async function populateFieldsOfStudy() {
+  const fieldSelect = document.getElementById("select-field-of-study");
+  try {
+    const fieldsOfStudy = await fetch(FIELDS_URL).then(handleHttpErrors);
+    fieldsOfStudy.forEach((field) => {
+      const option = document.createElement("option");
+      option.value = field;
+      option.textContent = field.replace("", " "); // Format enum names
+      fieldSelect.appendChild(option);
+    });
+  } catch (err) {
+    console.error("Error fetching fields of study:", err);
+    responseStatus.innerText =
+      "Failed to load fields of study. Try again later.";
+  }
 }
 
 // Password validation function
@@ -36,35 +40,19 @@ function validatePassword(password) {
     return "Password must contain at least one number.";
   }
   return null; // Valid password
-  }
-  
-  async function populateFieldsOfStudy() {
-  const fieldSelect = document.getElementById("select-field-of-study");
-  try {
-    const fieldsOfStudy = await fetch(FIELDS_URL).then(handleHttpErrors);
-    fieldsOfStudy.forEach((field) => {
-      const option = document.createElement("option");
-      option.value = field;
-      option.textContent = field.replace("_", " "); // Format enum names
-      fieldSelect.appendChild(option);
-    });
-  } catch (err) {
-    console.error("Error fetching fields of study:", err);
-    responseStatus.innerText =
-      "Failed to load fields of study. Try again later.";
-  }
+}
 
-// Sign up logic
 async function signupStudent(evt) {
   evt.preventDefault();
-
   const username = document.getElementById("input-username").value;
   const email = document.getElementById("input-email").value;
-  const firstName = document.getElementById("input-first-name").value;
-  const lastName = document.getElementById("input-last-name").value;
   const password = document.getElementById("input-password").value;
-  const confirmPassword = document.getElementById("input-password-confirm").value;
-  const location = document.getElementById("location").value; // Get location value
+  const firstName = document.getElementById("input-firstName").value;
+  const lastName = document.getElementById("input-lastName").value;
+  const fieldOfStudy = document.getElementById("select-field-of-study").value;
+  const confirmPassword = document.getElementById(
+    "input-password-confirm"
+  ).value;
 
   // Validate password
   const passwordError = validatePassword(password);
@@ -74,32 +62,26 @@ async function signupStudent(evt) {
     return;
   }
 
-  if (password !== confirmPassword) {
-    responseStatus.innerText = "Passwords do not match.";
+  if (password != confirmPassword) {
+    responseStatus.innerText = "Passwords does not match.";
     responseStatus.style.color = "darkred";
     return;
   }
 
-  role = "STUDENT";
+  const role = "STUDENT";
 
-  const user = {
+  const body = {
     username,
     email,
     password,
     role,
     firstName,
     lastName,
-    location, // Include location in the user object
-  };
-
-  const options = {
-    method: "POST",
-    headers: { "Content-type": "application/json" },
-    body: JSON.stringify(user),
+    fieldOfStudy,
   };
 
   try {
-    await fetch(URL, options).then(handleHttpErrors);
+    await fetch(URL, makeOptions("POST", body, false)).then(handleHttpErrors);
     window.router.navigate(
       "/login?msg=" + "You have successfully signed up. Please login"
     );
