@@ -14,7 +14,7 @@
               placeholder="username"
               required
             />
-            
+
             <!-- Email -->
             <label for="input-email">Email</label>
             <input
@@ -44,29 +44,19 @@
               placeholder="password"
               required
             />
-
-            <!-- Confirm Password -->
-            <label for="input-password-confirm">Confirm Password</label>
-            <input
-              type="password"
-              id="input-password-confirm"
-              class="form-control"
-              placeholder="Confirm password"
-              required
-            />
           </div>
 
-        <!-- Second Column: Industry, Website, Location, Contact Email -->
-        <div class="col-md-6 mb-3">
-          <!-- Website -->
-          <label for="website">Website</label>
-          <input
-            type="url"
-            id="input-website"
-            class="form-control"
-            placeholder="Website"
-            name="website"
-          />
+          <!-- Second Column: Industry, Website, Location, Contact Email -->
+          <div class="col-md-6 mb-3">
+            <!-- Website -->
+            <label for="website">Website</label>
+            <input
+              type="url"
+              id="input-website"
+              class="form-control"
+              placeholder="Website"
+              name="website"
+            />
 
             <!-- Location -->
             <label for="location">Location</label>
@@ -90,12 +80,24 @@
               name="contactEmail"
               required
             />
+            <!-- Confirm Password -->
+            <label for="input-password-confirm">Confirm Password</label>
+            <input
+              type="password"
+              id="input-password-confirm"
+              class="form-control"
+              placeholder="Confirm password"
+              required
+            />
           </div>
         </div>
 
         <!-- Status message -->
         <div class="row">
-          <p id="status" style="min-height: 1em; margin-top: 0.5em; color: red"></p>
+          <p
+            id="status"
+            style="min-height: 1em; margin-top: 0.5em; color: red"
+          ></p>
         </div>
 
         <!-- Submit button aligned with form -->
