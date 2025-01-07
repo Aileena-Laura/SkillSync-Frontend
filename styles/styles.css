@@ -12,13 +12,13 @@
   --button-hover: #5a1cbb;
 }
 
-.btn{
+.btn {
   background-color: var(--secondary-bg);
   color: var(--light-bg);
   border-radius: var(--border-radius);
 }
 
-.btn:hover{
+.btn:hover {
   background-color: var(--button-hover);
 }
 
@@ -35,7 +35,8 @@ body {
   color: var(--text-color);
 }
 
-h1, #page-info{
+h1,
+#page-info {
   color: var(--light-bg);
 }
 .h7 {
@@ -46,7 +47,6 @@ h1, #page-info{
   color: inherit;
   font-style: b;
 }
-
 
 /* Navbar */
 nav {
@@ -444,8 +444,6 @@ section:nth-child(even) {
   transition: background-color 0.3s;
 }
 
-
-
 /* Responsive Adjustments */
 @media (max-width: 768px) {
   .dashboard-header h1 {
@@ -524,8 +522,6 @@ section:nth-child(even) {
   height: 36px;
 }
 
-
-
 #loading-spinner {
   position: absolute;
   top: 50%;
@@ -543,11 +539,13 @@ section:nth-child(even) {
   padding: 10px;
 }
 
-#register-student, #register-company{
+#register-student,
+#register-company {
   color: var(--primary-bg);
 }
 
-#register-student:hover, #register-company:hover {
+#register-student:hover,
+#register-company:hover {
   color: var(--light-bg);
   background-color: var(--button-hover);
 }

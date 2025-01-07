@@ -13,6 +13,8 @@ const URLProject = API_URL + "/project";
 const URLStudent = API_URL + "/student";
 let currentPage = 0; // Start at the first page
 const pageSize = 5; // Number of projects per page
+let currentSearchTerm = ""; // Tracks the current search term
+let isSearching = false; // Tracks whether we are in search mode
 
 export function initDiscover() {
   document.getElementById("match-projects").innerHTML =
@@ -40,17 +42,27 @@ function updatePaginationControls(currentPage, totalPages) {
   nextButton.disabled = currentPage >= totalPages - 1;
 }
 
-async function fetchAndRenderProjects(page, size, searchTerm) {
+async function fetchAndRenderProjects(
+  page,
+  size,
+  searchTerm = currentSearchTerm
+) {
   try {
     const username = localStorage.getItem("user");
-    let url = `${URLProject}/match?studentId=${username}&page=${page}&size=${size}`;
-    if (searchTerm) {
+    let url;
+
+    if (isSearching && searchTerm) {
       url = `${URLProject}/search?term=${searchTerm}&userId=${username}&page=${page}&size=${size}`;
+      currentSearchTerm = searchTerm; // Store the search term globally
+    } else {
+      url = `${URLProject}/match?studentId=${username}&page=${page}&size=${size}`;
+      currentSearchTerm = ""; // Clear the stored search term
     }
 
     const res = await fetch(url, makeOptions("GET", null, true)).then(
       handleHttpErrors
     );
+
     if (res.content.length == 0) {
       displayMessage(
         "response-message",
@@ -118,7 +130,6 @@ function generateProjectCard(project) {
               <p class="h7">Fields of Study:</p>
               ${fieldTags || "<small>No fields of study listed</small>"}
             </div>
-            <!-- Add companyId and match information -->
             <div class="project-details mt-3">              
               <p class="h7" ><strong>Match Percentage:</strong> ${
                 project.match
@@ -164,7 +175,6 @@ function setupEventHandlers() {
 
   const companyDetails = (evt) => {
     const clicked = evt.target;
-    console.log(clicked);
     if (clicked.id.startsWith("company_")) {
       const id = clicked.id.replace("company_", "");
       window.router.navigate(`/company-info?id=${id}`);
@@ -173,15 +183,19 @@ function setupEventHandlers() {
   document.getElementById("match-projects").onclick = companyDetails;
 }
 
-// Handle search form submission
 function handleSearchSubmit(evt) {
   evt.preventDefault();
 
-  const searchTerm = document.getElementById("search-term").value;
+  const searchTerm = document.getElementById("search-term").value.trim();
 
-  // Reset current page to 0 when a new search is submitted
-  currentPage = 0;
+  if (searchTerm) {
+    isSearching = true;
+    currentSearchTerm = searchTerm; // Update the global search term
+  } else {
+    isSearching = false;
+    currentSearchTerm = "";
+  }
 
-  // Fetch and render projects based on search criteria
+  currentPage = 0; // Reset to the first page for a new search
   fetchAndRenderProjects(currentPage, pageSize, searchTerm);
 }
