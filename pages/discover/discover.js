@@ -131,9 +131,9 @@ function generateProjectCard(project) {
               ${fieldTags || "<small>No fields of study listed</small>"}
             </div>
             <div class="project-details mt-3">              
-              <p class="h7" ><strong>Match Percentage:</strong> ${
+              <p class="h7" ><strong>Match Percentage:</strong> ${Math.floor(
                 project.match
-              }%</p>
+              )}%</p>
             </div>
           </div>
         </div>
