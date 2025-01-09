@@ -1,5 +1,5 @@
 import { API_URL } from "../../settings.js";
-import { handleHttpErrors } from "../../utils.js";
+import { handleHttpErrors, updateNavbarLink } from "../../utils.js";
 
 let responseStatus;
 export function initLogin(match) {
@@ -29,11 +29,22 @@ async function login() {
       handleHttpErrors(r)
     );
     storeLoginDetails(res);
-    window.router.navigate("/");
+
+    // Redirect based on the user's role
+    const userRole = res.role;
+    if (userRole === "STUDENT") {
+      window.router.navigate("/discover");
+    } else if (userRole === "COMPANY") {
+      window.router.navigate("/dashboard");
+    } else {
+      console.warn("Unknown user role. Redirecting to homepage.");
+      window.router.navigate("/"); // Fallback to homepage
+    }
   } catch (err) {
     responseStatus.style.color = "darkred";
     if (err.apiError) {
-      responseStatus.innerText = loginRequest;
+      responseStatus.innerText =
+        "Login failed: " + err.apiError.message || "Unknown error";
     } else {
       responseStatus.innerText = err.message;
     }
@@ -42,7 +53,7 @@ async function login() {
 export function logout() {
   localStorage.removeItem("token");
   localStorage.removeItem("user");
-  localStorage.removeItem("roles");
+  localStorage.removeItem("role");
   toggleLoginStatus(false);
 }
 
@@ -51,16 +62,18 @@ export function toggleLoginStatus(loggedIn) {
   document.getElementById("login-container").style.display = loggedIn
     ? "none"
     : "block";
-  document.getElementById("logout-container").style.display = loggedIn
+  document.getElementById("profile-container").style.display = loggedIn
     ? "block"
     : "none";
   document.getElementById("signup-container").style.display = loggedIn
     ? "none"
     : "block";
   const loggedInUserTxt = loggedIn
-    ? `User: ${localStorage["user"]} (${localStorage["roles"]})`
+    ? `User: ${localStorage["user"]} (${localStorage["role"]})`
     : "";
-  document.getElementById("user-details").innerText = loggedInUserTxt;
+
+  updateNavbarLink();
+
   if (responseStatus) {
     responseStatus.innerText = "";
   }
@@ -73,7 +86,7 @@ export function toggleLoginStatus(loggedIn) {
 function storeLoginDetails(res) {
   localStorage.setItem("token", res.token);
   localStorage.setItem("user", res.username);
-  localStorage.setItem("roles", res.roles);
+  localStorage.setItem("role", res.role);
   //Update UI
   toggleLoginStatus(true);
 }

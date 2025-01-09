@@ -1,0 +1,67 @@
+<template>
+  <div class="container-fluid py-5">
+    <div class="row">
+      <!-- Top Section: Description and Profile Picture -->
+      <div
+        class="col-12 d-flex flex-wrap justify-content-between align-items-stretch"
+      >
+        <!-- Description -->
+        <div class="col-lg-8 mb-4">
+          <div class="card h-100">
+            <h5 class="card-header">Description</h5>
+            <div class="card-body">
+              <p id="user-description">
+                The company has not provided a description yet.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Profile Picture -->
+        <div class="col-lg-4 mb-4 d-flex align-items-stretch">
+          <div class="card w-100">
+            <div class="card-body text-center position-relative">
+              <div class="profile-image-container">
+                <img
+                  id="profile-picture"
+                  src="/images/user.png"
+                  alt="avatar"
+                  class="rounded-circle img-fluid profile-image"
+                />
+              </div>
+              <h5 id="company-name" class="my-3">Company Name</h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Basic Info Section -->
+      <div class="col-12 mb-4">
+        <div class="card">
+          <div class="card-header">Info</div>
+          <div id="basic-info" class="card-body d-flex flex-wrap">
+            <div class="info-item me-4">
+              <p id="basic-email"><strong>Contact Email:</strong> N/A</p>
+            </div>
+            <div class="info-item me-4">
+              <p id="basic-website"><strong>Website:</strong> N/A</p>
+            </div>
+            <div class="info-item me-4">
+              <p id="basic-location"><strong>Location:</strong> N/A</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Projects Section -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header text-center">
+            <h5 class="card-title">Projects</h5>
+          </div>
+          <div id="company-projects" class="card-body text-center"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

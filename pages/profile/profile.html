@@ -1,0 +1,240 @@
+<template>
+  <div class="container-fluid py-5">
+    <div class="row">
+      <!-- Profile Section -->
+      <div class="col-lg-4">
+        <div class="card mb-4">
+          <div class="card-body text-center position-relative">
+            <!-- Profile Picture with Hover Effect and Edit Icon -->
+            <div class="profile-image-container">
+              <img
+                id="profile-picture"
+                src="/images/user.png"
+                alt="avatar"
+                class="rounded-circle img-fluid profile-image"
+              />
+            </div>
+            <h5 id="user-name" class="my-3">Name</h5>
+          </div>
+        </div>
+
+        <!-- Profile Info Section -->
+        <div class="card mb-4">
+          <div class="card-header">Basic Info</div>
+          <div id="basic-info" class="card-body">
+            <!-- Content dynamically inserted -->
+          </div>
+          <div class="card-footer">
+            <button
+              id="edit-basic-info-btn"
+              class="btn btn-outline-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#edit-basic-info-modal"
+            >
+              Edit
+            </button>
+            <button
+              id="delete-account-btn"
+              class="btn btn-outline-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#delete-account-modal"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Second Column (Description, Projects) -->
+      <div id="profile-second-column" class="col-lg-8">
+        <!-- Description -->
+        <div class="card mb-4">
+          <h5 class="card-header">Description</h5>
+          <div class="card-body">
+            <textarea id="user-description" class="form-control mb-3" rows="4">
+            </textarea>
+            <button id="save-description" class="btn btn-outline-primary mb-3">
+              Save
+            </button>
+            <p id="description-message" style="color: green"></p>
+          </div>
+        </div>
+
+        <!-- Posted Projects (Company) -->
+        <div id="profile-projects-section" class="row" style="display: none">
+          <div class="col-md-12">
+            <div class="card mb-4">
+              <div class="card-header">
+                <h5 class="card-title">Projects</h5>
+              </div>
+              <div id="my-projects" class="card-body">
+                <!-- Projects dynamically inserted -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="add-skill-modal"
+    tabindex="-1"
+    aria-labelledby="modal-title"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal-title">Add Skill:</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div>
+            <div class="form-group">
+              <label for="select-skill" class="form-label">Skill</label>
+              <select id="select-skill" class="form-select"></select>
+            </div>
+            <div class="form-group">
+              <label for="skill-experience" class="me-2">Experience:</label>
+              <select
+                id="skill-experience"
+                name="experience"
+                class="form-select"
+                required
+              >
+                <option value="LOW">Low</option>
+                <option value="MEDIUM">Medium</option>
+                <option value="HIGH">High</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            id="save-skill-btn"
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="edit-basic-info-modal"
+    tabindex="-1"
+    aria-labelledby="modal-title"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editBasicInfoModalLabel">Edit Info</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div id="edit-basic-info">
+            <div class="mb-3">
+              <label for="edit-first-name" class="form-label">First Name</label>
+              <input type="text" id="edit-first-name" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-company-name" class="form-label"
+                >Company Name</label
+              >
+              <input type="text" id="edit-company-name" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-last-name" class="form-label">Last Name</label>
+              <input type="text" id="edit-last-name" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-email" class="form-label">Email</label>
+              <input type="text" id="edit-email" required />
+            </div>
+            <div class="mb-3">
+              <label for="edit-location" class="form-label">Location</label>
+              <input type="text" id="edit-location" required />
+              <ul id="location-suggestions" class="dropdown-menu"></ul>
+            </div>
+            <div class="mb-3">
+              <label for="edit-education" class="form-label">Education</label>
+              <input type="text" class="form-control" id="edit-education" />
+            </div>
+            <div class="mb-3">
+              <label for="edit-website" class="form-label">Website</label>
+              <input type="text" class="form-control" id="edit-website" />
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn btn-primary"
+            id="save-basic-info-btn"
+            data-bs-dismiss="modal"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal" id="delete-account-modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h5 class="modal-title">
+            Are You sure you want to delete your account?
+          </h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+          ></button>
+        </div>
+
+        <!-- Modal body -->
+        <div class="modal-body">
+          <p>This action is perminant and cannot be reversed.</p>
+          <p id="successful-delete-message"></p>
+        </div>
+
+        <!-- Modal footer -->
+        <div class="modal-footer">
+          <button type="button" class="btn" data-bs-dismiss="modal">
+            Cancel
+          </button>
+          <button
+            id="delete-account-final-btn"
+            type="button"
+            class="btn btn-danger"
+            data-bs-dismiss="modal"
+          >
+            Delete
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
