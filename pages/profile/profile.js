@@ -253,7 +253,6 @@ async function saveChangesToBasicInfo(user, URL) {
     if (user.role === "STUDENT") {
       body.firstName = document.getElementById("edit-first-name").value;
       body.lastName = document.getElementById("edit-last-name").value;
-      body.education = document.getElementById("edit-education").value;
     } else if (user.role === "COMPANY") {
       body.companyName = document.getElementById("edit-company-name").value;
       body.website = document.getElementById("edit-website").value;
@@ -283,7 +282,6 @@ function populateEditModal(user, isStudent) {
   const lastNameField = document.getElementById("edit-last-name");
   const emailField = document.getElementById("edit-email");
   const locationField = document.getElementById("edit-location");
-  const educationField = document.getElementById("edit-education");
   const websiteField = document.getElementById("edit-website");
 
   // Common fields (always shown for both)
@@ -293,7 +291,6 @@ function populateEditModal(user, isStudent) {
   // Hide all fields initially
   firstNameField.parentElement.classList.add("hidden");
   lastNameField.parentElement.classList.add("hidden");
-  educationField.parentElement.classList.add("hidden");
   websiteField.parentElement.classList.add("hidden");
   companyNameField.parentElement.classList.add("hidden");
 
@@ -301,11 +298,9 @@ function populateEditModal(user, isStudent) {
     // For students, show student-specific fields
     firstNameField.value = sanitizeString(user.firstName || "");
     lastNameField.value = sanitizeString(user.lastName || "");
-    educationField.value = sanitizeString(user.education || "");
 
     firstNameField.parentElement.classList.remove("hidden");
     lastNameField.parentElement.classList.remove("hidden");
-    educationField.parentElement.classList.remove("hidden");
   } else {
     // For companies, show company-specific fields
     companyNameField.value = sanitizeString(user.companyName || "");
