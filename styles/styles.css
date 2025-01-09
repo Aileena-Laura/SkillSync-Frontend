@@ -549,3 +549,7 @@ section:nth-child(even) {
   color: var(--light-bg);
   background-color: var(--button-hover);
 }
+
+.hidden {
+  display: none;
+}
